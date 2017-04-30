@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "rootDir": "src",
+        "baseUrl": "src",
+        "paths": {
+            "*": [
+                "src"
+            ]
+        },
+        "outDir": "dist",
+        "jsx": "react",
+        "strictNullChecks": true,
+        "lib": [
+            "es2016", "dom"
+        ]
+    },
+    "include": [
+        "typings/index.d.ts",
+        "src/**/*"
+    ]
+}
