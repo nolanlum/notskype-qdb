@@ -2,24 +2,29 @@ import Component from "inferno-component";
 
 import Quote from "../components/quote";
 
-interface SearchBarProps {onSearch: (string) => void;}
-interface SearchBarState {searchQuery: string;}
+interface SearchBarProps {
+    onSearch : (query : string) => void;
+}
+
+interface SearchBarState {
+    searchQuery : string;
+}
 
 export default class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
     constructor(props) {
         super(props);
         this.state = {
-            searchQuery: ""
+            searchQuery : ""
         };
     }
 
-    __handleFormSubmit(evt: Event) {
+    __handleFormSubmit(evt : Event) {
         evt.preventDefault();
         this.props.onSearch(this.state.searchQuery);
     }
 
-    __handleSearchbarUpdate(evt: Event) {
+    __handleSearchbarUpdate(evt : Event) {
         const srcElement = evt.srcElement as HTMLInputElement;
         const searchQuery : string = srcElement.value;
         this.setState({searchQuery});
