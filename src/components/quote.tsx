@@ -1,5 +1,5 @@
 import Component from "inferno-component";
-import * as moment from "moment"
+import * as moment from "moment";
 
 const Quote = ({id, author, speakerName, speakerIcon, body, addedAt}) =>
     <article class="quote">
@@ -9,6 +9,6 @@ const Quote = ({id, author, speakerName, speakerIcon, body, addedAt}) =>
             <aside class="quote-speaker">- {speakerName}</aside>
         </section>
         <aside class="quote-timestamp">added by {author} {moment(new Date(addedAt)).fromNow()}</aside>
-    </article>
+    </article>;
 
 export default Quote;

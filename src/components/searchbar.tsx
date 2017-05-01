@@ -2,8 +2,8 @@ import Component from "inferno-component";
 
 import Quote from "../components/quote";
 
-interface SearchBarProps {onSearch: (string) => void}
-interface SearchBarState {searchQuery: string};
+interface SearchBarProps {onSearch: (string) => void;}
+interface SearchBarState {searchQuery: string;}
 
 export default class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
@@ -11,7 +11,7 @@ export default class SearchBar extends Component<SearchBarProps, SearchBarState>
         super(props);
         this.state = {
             searchQuery: ""
-        }
+        };
     }
 
     __handleFormSubmit(evt: Event) {
@@ -29,7 +29,7 @@ export default class SearchBar extends Component<SearchBarProps, SearchBarState>
         return(
             <form class="searchbar" onSubmit={
                 this.__handleFormSubmit.bind(this)}>
-                <input 
+                <input
                     class="searchbar-input"
                     type="text"
                     name="search"
