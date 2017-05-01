@@ -24,8 +24,6 @@ export default class Main extends Component<{}, {}> {
                                     <Quote
                                         id={"0"}
                                         author={"mhuan13@gmail.com"}
-                                        speakerName={"unknown"}
-                                        speakerIcon={placeholderIcon}
                                         body={body}
                                         addedAt={"2017-05-01T18:41:37+00:00"}
                                     />);

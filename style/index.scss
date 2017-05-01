@@ -14,9 +14,9 @@ html, body {
     margin: 0;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Overpass+Mono');
 
-html {
-    font-family: 'Slabo 27px', serif;
+html, input, pre {
+    font-family: 'Overpass Mono', monospace;
 }
 
