@@ -8,7 +8,7 @@ module.exports = {
         filename: 'qdb.bundle.js'
     },
     cache: true,
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
     },

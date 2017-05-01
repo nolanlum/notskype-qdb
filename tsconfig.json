@@ -13,7 +13,7 @@
         },
         "outDir": "dist",
         "jsx": "preserve",
-        "strictNullChecks": true,
+        "strictNullChecks": false,
         "lib": [
             "es2016", "dom"
         ]

@@ -2,7 +2,11 @@ import Component from "inferno-component";
 
 import Quote from "../components/quote";
 
-export default class Main extends Component<{}, {}> {
+interface SearchBarProps {onSearch: (string) => void}
+interface SearchBarState {searchQuery: string};
+
+export default class SearchBar extends Component<SearchBarProps, SearchBarState> {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -10,13 +14,15 @@ export default class Main extends Component<{}, {}> {
         }
     }
 
-    __handleFormSubmit(evt) {
+    __handleFormSubmit(evt: Event) {
         evt.preventDefault();
-        this.props.onSearch();
+        this.props.onSearch(this.state.searchQuery);
     }
 
-    __handleSearchbarUpdate(evt) {
-        this.setState({searchQuery: evt.srcElement.value});
+    __handleSearchbarUpdate(evt: Event) {
+        const srcElement = evt.srcElement as HTMLInputElement;
+        const searchQuery : string = srcElement.value;
+        this.setState({searchQuery});
     }
 
     render() {
@@ -30,7 +36,7 @@ export default class Main extends Component<{}, {}> {
                     placeholder="search qdb"
                     onInput={this.__handleSearchbarUpdate.bind(this)
                     }>
-                        {this.state.searchQuery}
+                        this.state.searchQuery
                     </input>
             </form>
         );
