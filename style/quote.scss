@@ -1,0 +1,73 @@
+@import "colors.scss";
+
+$iconsize: 64px;
+$ratio: 2.8284271247 / 2;
+
+.quote {
+
+    margin: $gu;
+    width: 100%;
+    width: 600px;
+    position: relative;
+    padding-bottom: 2 * $gu;
+    
+    & {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .quote-profile-icon {
+        border-radius: 50%;
+        width: $iconsize;
+        height: $iconsize;
+        flex-shrink: 0;
+        transform: translate(0.9 * $gu, -0.9 * $gu);
+    }
+
+    .quote-timestamp {
+        font-style: italic;
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 2 * $gu;
+        opacity: 0.5;
+        color: $theme-foreground-light;
+    }
+
+    .quote-body {
+        position: relative;
+        flex-grow: 1;
+        border: 1px solid $theme-background-light;
+        margin-left: 2 * $gu;
+        padding: 2 * $gu;
+        background-color: $theme-background-light;
+
+        &:before {
+            $trianglesize: 2 / 2.8 * 2 * $gu;
+            content: "";
+            display: block;
+            position: absolute;
+
+            bottom: -1px;
+            left: - 2 * $trianglesize;
+
+            border: $trianglesize solid transparent;
+            border-right: $trianglesize solid $theme-background-light;
+            transform: translate(
+                $trianglesize,
+                $trianglesize
+                ) rotate(-135deg) ;
+        }
+
+        .quote-text {
+            margin-bottom: $gu;
+        }
+
+        .quote-speaker{
+            font-style: italic;
+            text-align: right;
+        }
+
+    }
+    
+}

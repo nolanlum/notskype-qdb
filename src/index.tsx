@@ -1,8 +1,7 @@
-import Main from "./components/main";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import Main from "./containers/main";
+import Inferno from "inferno";
 
-let container = document.getElementById("main");
+let container = document.getElementById("inferno-host");
 if (container) {
-    ReactDOM.render(<Main />, container);
+    Inferno.render(<Main />, container);
 }
