@@ -13,7 +13,7 @@ export interface Quote {
 
 /*
 [9:06 PM] Wheatless: wow gj gabe
-[9:06 PM] PJ: [tiff snaps into the sunset]
+[9:06 PM] PJ: [tiff snaps into the sunset
 */
 const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$\n*)+/m;
 
@@ -39,7 +39,7 @@ melanie
 [5:23 PM]
 I just got home, so I'm gonna read them now!
 */
-const slackHeaderRegex = /^(.+?[^\s])( |$\n?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?$\n?/m;
+const slackHeaderRegex = /^(.+?[^\s])( |$\n?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
 
 function parseLog(regex, extractor, rawQuote) {
     let log = [];
@@ -91,7 +91,7 @@ function parseSlackLog(rawQuote) {
         else {
             let lineStart = rawQuote.indexOf("\n");
             if (lineStart === -1 ) {
-                 lineStart = rawQuote.length;
+                lineStart = rawQuote.length;
             } else {
                 lineStart ++;
             }

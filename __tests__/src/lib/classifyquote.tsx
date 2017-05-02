@@ -107,19 +107,19 @@ describe("classifyQuote", function() {
             ]
         });
 
-        // expect(classifyQuote("Max [5:15 PM]\n"+
-        //     ":thinking_face:\n"
-        //     "\n"
-        //     "Max [5:15 PM]\n"+
-        //     ":thinccing_face:\n"
-        //     "\n"
-        //     )).toEqual({
-        //     type: "slack",
-        //     messages: [
-        //         { speaker: "Max", body: ":thinking_face:\n" },
-        //         { speaker: "Max", body: ":thinccing_face:\n" },
-        //     ]
-        // });
+        expect(classifyQuote("Max [5:15 PM]\n"+
+            ":thinking_face:\n" +
+            "\n" +
+            "Max [5:15 PM]\n"+
+            ":thinccing_face:\n" +
+            "\n"
+            )).toEqual({
+            type: "slack",
+            messages: [
+                { speaker: "Max", body: ":thinking_face:" },
+                { speaker: "Max", body: ":thinccing_face:" },
+            ]
+        });
 
     });
 
