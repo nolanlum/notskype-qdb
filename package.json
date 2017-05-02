@@ -34,10 +34,13 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
+    "core-js": "^2.4.1",
+    "express": "^4.15.2",
+    "http-proxy-middleware": "^0.17.4",
     "inferno": "^3.1.0",
     "inferno-component": "^3.1.0",
-    "moment": "^2.18.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "inferno-server": "^3.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.18.1"
   }
 }
