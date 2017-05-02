@@ -2,6 +2,7 @@ import Component from "inferno-component";
 
 import Quote from "../components/quote";
 import SearchBar from "../components/searchbar";
+import PasteInput from "../components/pasteinput";
 
 require("../../style/main.scss");
 
@@ -34,6 +35,7 @@ class Main extends Component<{}, {}> {
             <section class={"main-container"}>
                 <SearchBar onSearch={() =>
                         console.log("search not implemented")}/>
+                <PasteInput/>
                 <section class={"quote-container"}>
                     {quotes}
                 </section>

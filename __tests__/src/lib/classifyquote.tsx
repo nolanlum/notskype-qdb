@@ -1,7 +1,7 @@
 import classifyQuote from "lib/classifyquote";
 
 const reject = (quote) => expect(classifyQuote(quote)).toEqual({
-    type: "unknown",
+    type: "unrecognized",
     message: quote
 });
 
@@ -25,6 +25,14 @@ describe("classifyQuote", function() {
                 { speaker: "PJ", body: "[tiff snaps into the sunset]" }
             ]
         });
+
+        expect(classifyQuote("[12:46 AM] Jay Tau: !aku texas")).toEqual({
+            type: "discord",
+            messages: [
+                { speaker: "Jay Tau", body: "!aku texas" },
+            ]
+        });
+
 
     });
 
@@ -116,16 +124,16 @@ describe("classifyQuote", function() {
     });
 
     it("should reject not-quite slack logs", function() {
-        reject("Tiffany [500:15 PM]\n"+
+        reject("Tiffany [500:15 PM]\n" +
             "shucks\n");
 
-        reject("Tiffany [50:151 PM]\n"+
+        reject("Tiffany [50:151 PM]\n" +
             "shucks\n");
 
-        reject("Tiffany [50:151 ZM]\n"+
+        reject("Tiffany [50:151 ZM]\n" +
             "shucks\n");
 
-        reject("Tiffany  [5:15 PM]\n"+
+        reject("Tiffany  [5:15 PM]\n" +
             "shucks\n");
 
     });
