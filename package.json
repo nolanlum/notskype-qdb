@@ -36,6 +36,7 @@
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.17.0",
+    "ts-jest": "^19.0.14",
     "ts-loader": "^2.0.3",
     "tslint": "^5.1.0",
     "tslint-loader": "^3.5.3",
@@ -58,5 +59,22 @@
     "express": "^4.15.2",
     "http-proxy-middleware": "^0.17.4",
     "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.18.1",
+    "jest": "^19.0.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "modulePaths": [
+      "<rootDir>/src"
+    ]
   }
+
 }
