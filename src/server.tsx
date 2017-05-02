@@ -1,8 +1,7 @@
-import Main from "./components/main";
+import Main from "./containers/main";
 import * as express from "express";
 import * as proxy from "http-proxy-middleware";
-import * as React from "react";
-import { renderToString } from "react-dom/server";
+import InfernoServer from "inferno-server";
 
 let app = express();
 app.use(express.static("static"));
@@ -14,7 +13,7 @@ app.use("/api", proxy({
 app.use(ssrMiddleware);
 
 function ssrMiddleware(req : express.Request, res : express.Response) {
-    let initial_dom = renderToString(<Main />);
+    let initial_dom = InfernoServer.renderToString(<Main />);
     res.send(renderBasePage(initial_dom))
 }
 

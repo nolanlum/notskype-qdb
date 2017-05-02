@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var path = require('path')
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -10,7 +12,7 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     cache: true,
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
     },
@@ -18,7 +20,8 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader'
+                loader: ['babel-loader', 'ts-loader'],
+                exclude: /node_modules/
             },
             {
                 test: /\.tsx?$/,
@@ -30,14 +33,27 @@ module.exports = {
                 enforce: 'pre'
             },
             {
-                test: /\.jsx?$/,
-                loader: 'source-map-loader',
-                enforce: 'pre'
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    loader: [
+                        "css-loader",
+                        "postcss-loader",
+                        "sass-loader"
+                    ]
+                })
             }
         ],
     },
     plugins: [
         // new webpack.optimize.UglifyJsPlugin([]),
         // new webpack.optimize.DedupePlugin()
+        new ExtractTextPlugin({
+            filename: 'qdb.bundle.css',
+            allChunks: true
+        }),
+        new CopyWebpackPlugin([
+            { from: "static" } // Copy contents of /static to /dist/client/
+        ])
     ]
 }

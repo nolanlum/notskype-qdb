@@ -1,0 +1,21 @@
+@import "colors.scss";
+
+.main-container {
+    background-color: $theme-background-dark;
+    background-position: fixed;
+    background-size: cover;
+
+    .quote-container {
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        align-items: middle;
+        justify-content: center;
+
+        padding: 2 * $gu;
+        max-width: 1600px;
+        margin: 0 auto 0 auto;
+    }
+}

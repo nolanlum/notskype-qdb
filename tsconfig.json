@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "commonjs",
+        "module": "es6",
         "moduleResolution": "node",
         "sourceMap": true,
         "rootDir": "src",
@@ -12,8 +12,8 @@
             ]
         },
         "outDir": "dist",
-        "jsx": "react",
-        "strictNullChecks": true,
+        "jsx": "preserve",
+        "strictNullChecks": false,
         "lib": [
             "es2016", "dom"
         ]

@@ -1,0 +1,51 @@
+@import "colors.scss";
+
+$iconsize: 64px;
+$ratio: 2.8284271247 / 2;
+
+.quote {
+
+    & {
+        margin: $gu;
+        width: 100%;
+        width: 600px;
+        position: relative;
+        margin-bottom: 2 * $gu;
+    
+
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .quote-body {
+        width: 100%;
+        padding: 2 * $gu;
+        background-color: $theme-background-light;
+    }
+
+    .quote-profile-icon {
+        border-radius: 50%;
+        width: $iconsize;
+        height: $iconsize;
+        flex-shrink: 0;
+        transform: translate(0.9 * $gu, -0.9 * $gu);
+    }
+
+    .quote-timestamp {
+        font-style: italic;
+        text-align: right;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5 * $gu;
+        opacity: 0.5;
+        color: $theme-foreground-light;
+    }
+
+    .quote-text {
+        display: block;
+        margin-bottom: $gu;
+        background-color: $theme-background-light;
+    }
+
+}
