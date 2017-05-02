@@ -8,7 +8,7 @@ interface SearchBarState {
     searchQuery : string;
 }
 
-export default class SearchBar extends Component<SearchBarProps, SearchBarState> {
+class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
     constructor(props) {
         super(props);
@@ -45,3 +45,5 @@ export default class SearchBar extends Component<SearchBarProps, SearchBarState>
         );
     }
 }
+
+export default SearchBar;

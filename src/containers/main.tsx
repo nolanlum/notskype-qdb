@@ -18,7 +18,7 @@ const lipsum = [
 ];
 
 
-export default class Main extends Component<{}, {}> {
+class Main extends Component<{}, {}> {
     render() {
         const quotes = lipsum.map((body) =>
                                     <Quote
@@ -39,3 +39,5 @@ export default class Main extends Component<{}, {}> {
         );
     }
 }
+
+export default Main;
