@@ -1,4 +1,5 @@
 import Component from "inferno-component";
+require("../../style/searchbar.scss");
 
 interface SearchBarProps {
     onSearch : (query : string) => void;

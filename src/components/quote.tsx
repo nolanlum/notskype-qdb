@@ -1,6 +1,8 @@
 import Component from "inferno-component";
 import * as moment from "moment";
 
+require("../../style/quote.scss");
+
 const Quote = ({id, author, body, addedAt}) =>
     <article class="quote">
         <section class="quote-body">

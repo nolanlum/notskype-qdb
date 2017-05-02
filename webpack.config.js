@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var path = require('path')
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -30,10 +32,28 @@ module.exports = {
                 },
                 enforce: 'pre'
             },
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    loader: [
+                        "css-loader",
+                        "postcss-loader",
+                        "sass-loader"
+                    ]
+                })
+            }
         ],
     },
     plugins: [
         // new webpack.optimize.UglifyJsPlugin([]),
         // new webpack.optimize.DedupePlugin()
+        new ExtractTextPlugin({
+            filename: 'qdb.bundle.css',
+            allChunks: true
+        }),
+        new CopyWebpackPlugin([
+            { from: "static" } // Copy contents of /static to /dist/client/
+        ])
     ]
 }

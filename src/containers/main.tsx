@@ -3,6 +3,8 @@ import Component from "inferno-component";
 import Quote from "../components/quote";
 import SearchBar from "../components/searchbar";
 
+require("../../style/main.scss");
+
 const placeholderIcon = "https://placeholdit.imgix.net/~text?txtsize=8&txt=64%C3%9764&w=64&h=64";
 
 const lipsum = [
