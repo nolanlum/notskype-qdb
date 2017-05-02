@@ -1,6 +1,8 @@
 import Component from "inferno-component";
 import classifyQuote, {Quote} from "../lib/classifyquote";
 
+require("../../style/pasteinput.scss");
+
 interface PasteInputProps {
 }
 
