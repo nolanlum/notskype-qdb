@@ -1,7 +1,5 @@
 import Component from "inferno-component";
 
-import Quote from "../components/quote";
-
 interface SearchBarProps {
     onSearch : (query : string) => void;
 }
