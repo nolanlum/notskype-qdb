@@ -179,16 +179,4 @@ describe("classifyQuote", function() {
 
     });
 
-    // it("should parse a compact slack log", function() {
-    //     expect(classifyQuote("[05:15 AM] nolm compact slack is super consistent\n"+
-    //         "[05:15 AM] nolm haha jk"
-    //         )).toEqual({
-    //         type: "slack",
-    //         messages: [
-    //             { speaker: "nolm", body: "compact slack is super consistent" },
-    //             { speaker: "nolm", body: "haha jk" },
-    //         ]
-    //     });        
-    // })
-
 })
