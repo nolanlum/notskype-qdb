@@ -1,0 +1,56 @@
+@import 'colors.scss';
+
+.paste-box {
+
+
+    margin: 0 auto 0 auto;
+    width: 600px;
+
+    &.discord {
+        .paste-box-input {
+            outline-color: #7289DA;
+        }
+
+        .paste-box-name {
+            color: #7289DA;
+        }
+    }
+
+    &.slack {
+        .paste-box-input {
+            outline-color: #CE1F5B;
+        }
+
+        .paste-box-name {
+            color: #CE1F5B;
+        }
+    }
+
+    &.irc {
+        .paste-box-input {
+            outline-color: #78D4B6;
+        }
+
+        .paste-box-name {
+            color: #78D4B6;
+        }
+    }
+    
+    &.unrecognized {
+        .paste-box-input {
+            outline-color: #666666;
+        }
+
+        .paste-box-name {
+            color: #666666;
+        }
+    }
+
+    .paste-box-input {
+        outline: 5px solid transparent;
+        padding: $gu;
+        width: 600px;
+        resize: vertical;
+    }
+
+}
