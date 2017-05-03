@@ -4,6 +4,7 @@ import classifyQuote, {Quote} from "../lib/classifyquote";
 require("../../style/pasteinput.scss");
 
 interface PasteInputProps {
+    onSubmit : (quote : Quote) => void;
 }
 
 interface PasteInputState {
@@ -25,6 +26,10 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
         console.log(quote);
     }
 
+    __onSubmit() {
+        this.props.onSubmit(this.state.quote);
+    }
+
     render() {
         let quoteClass = (this.state && this.state.quote)
             ? this.state.quote.type
@@ -40,6 +45,12 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
                     onInput={this.__onQuoteChange.bind(this)}
                     />
                 <aside class="paste-box-name">{quoteClass}</aside>
+                <button
+                    class="paste-submit"
+                    disabled={ this.state.quote === undefined }
+                    onClick={ this.__onSubmit.bind(this) }>
+                    Submit
+                </button>
             </section>
         );
     }

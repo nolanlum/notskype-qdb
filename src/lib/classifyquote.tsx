@@ -15,13 +15,13 @@ export interface Quote {
 [9:06 PM] Wheatless: wow gj gabe
 [9:06 PM] PJ: [tiff snaps into the sunset
 */
-const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$\n*)+/m;
+const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$\r?\n*)+/m;
 
 /*
 <tttb> Why did the programmer quit his job?
 <tttb> because he didn't get arrays
 */
-const ircRegex = /(^<([^\s]+)> (.+?)$\n?)+/m;
+const ircRegex = /(^<([^\s]+)> (.+?)$\r?\n?)+/m;
 
 /*
 Tiffany [5:15 PM]
@@ -39,7 +39,7 @@ melanie
 [5:23 PM]
 I just got home, so I'm gonna read them now!
 */
-const slackHeaderRegex = /^(.+?[^\s])( |$\n?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+const slackHeaderRegex = /^(.+?[^\s])( |$\r?\n?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
 
 function parseLog(regex, extractor, rawQuote) {
     let log = [];

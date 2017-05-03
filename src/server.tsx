@@ -4,12 +4,13 @@ import * as proxy from "http-proxy-middleware";
 import InfernoServer from "inferno-server";
 
 let app = express();
-app.use(express.static("static"));
+app.use(express.static("dist"));
 app.use("/api", proxy({
     target: "http://localhost:8080",
     logLevel: "debug"
 }));
 
+/*
 app.use(ssrMiddleware);
 
 function ssrMiddleware(req : express.Request, res : express.Response) {
@@ -19,14 +20,20 @@ function ssrMiddleware(req : express.Request, res : express.Response) {
 
 function renderBasePage(initial_dom) {
     return `
-    <!doctype html>
-    <html>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>qdb</title>
+            <link rel="stylesheet" href="./qdb.bundle.css"/>
+        </head>
         <body>
-            <div id="main">${initial_dom}</div>
+            <p>SSR!</p>
+            <section id="inferno-host">${initial_dom}</section>
+            <script src="./qdb.bundle.js"></script>
         </body>
-        <script src="./qdb.bundle.js"></script>
-    </html>
+        </html>
     `;
 }
+*/
 
 app.listen(8000);

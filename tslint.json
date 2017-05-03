@@ -15,7 +15,7 @@
             true,
             "spaces"
         ],
-        "linebreak-style": [true, "LF"],
+        "linebreak-style": [true, "CRLF"],
         "new-parens": true,
         "no-duplicate-variable": true,
         "no-eval": true,
