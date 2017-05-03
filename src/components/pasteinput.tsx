@@ -19,12 +19,9 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
     }
 
     __onQuoteChange(evt : Event) {
-        console.log(evt);
         let quoteInput : HTMLInputElement = evt.target as HTMLInputElement;
-        console.log(quoteInput);
         let quote = classifyQuote(quoteInput.value);
         this.setState({quote});
-        console.log(quote);
     }
 
     render() {
