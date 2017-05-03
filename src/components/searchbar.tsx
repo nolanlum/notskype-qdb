@@ -24,7 +24,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     }
 
     __handleSearchbarUpdate(evt : Event) {
-        const srcElement = evt.srcElement as HTMLInputElement;
+        const srcElement = evt.target as HTMLInputElement;
         const searchQuery : string = srcElement.value;
         this.setState({searchQuery});
     }

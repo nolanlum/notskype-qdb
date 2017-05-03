@@ -20,10 +20,9 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
     }
 
     __onQuoteChange(evt : Event) {
-        let quoteInput : HTMLInputElement = evt.srcElement as HTMLInputElement;
+        let quoteInput : HTMLInputElement = evt.target as HTMLInputElement;
         let quote = classifyQuote(quoteInput.value);
         this.setState({quote});
-        console.log(quote);
     }
 
     __onSubmit() {
