@@ -15,13 +15,13 @@ export interface Quote {
 [9:06 PM] Wheatless: wow gj gabe
 [9:06 PM] PJ: [tiff snaps into the sunset
 */
-const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$\n*)+/m;
+const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$(\n|\r\n)*)+/m;
 
 /*
 <tttb> Why did the programmer quit his job?
 <tttb> because he didn't get arrays
 */
-const ircRegex = /(^<([^\s]+)> (.+?)$\n?)+/m;
+const ircRegex = /(^<([^\s]+)> (.+?)$(\n|\r\n)?)+/m;
 
 /*
 Tiffany [5:15 PM]
@@ -39,7 +39,7 @@ melanie
 [5:23 PM]
 I just got home, so I'm gonna read them now!
 */
-const slackHeaderRegex = /^(.+?[^\s])( |$\n?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+const slackHeaderRegex = /^(.+?[^\s])( |$(\r\n|\n)?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
 
 function parseLog(regex, extractor, rawQuote) {
     let log = [];
@@ -67,7 +67,7 @@ function parseLog(regex, extractor, rawQuote) {
 function parseSlackLog(rawQuote) {
     let log = [];
     let currentAuthor = undefined;
-    let currentMessage = "";
+    let currentMessage = [];
     let i = 0;
     while (rawQuote !== "") {
         if (i++ > 1000) {
@@ -80,30 +80,36 @@ function parseSlackLog(rawQuote) {
             if (currentAuthor !== undefined) {
                 log.push({
                     speaker: currentAuthor,
-                    body: currentMessage.trim(),
+                    body: currentMessage.join("\n").trim(),
                 });
             }
-            currentMessage = "";
+            currentMessage = [];
             currentAuthor = match[1];
             rawQuote = rawQuote.substring(match[0].length);
         }
 
         else {
-            let lineStart = rawQuote.indexOf("\n");
-            if (lineStart === -1 ) {
-                lineStart = rawQuote.length;
+            let lineStart = rawQuote.indexOf("\r\n");
+            if (lineStart !== -1) {
+                currentMessage.push(rawQuote.substring(0, lineStart));
+                rawQuote = rawQuote.substring(lineStart + 2);
             } else {
-                lineStart ++;
+                lineStart = rawQuote.indexOf("\n");
+                if (lineStart === -1 ) {
+                    currentMessage.push(rawQuote);
+                    rawQuote = "";
+                } else {
+                    currentMessage.push(rawQuote.substring(0, lineStart));
+                    rawQuote = rawQuote.substring(lineStart + 1);
+                }
             }
-            currentMessage += rawQuote.substring(0, lineStart);
-            rawQuote = rawQuote.substring(lineStart);
         }
     }
 
     if (currentAuthor !== undefined) {
         log.push({
             speaker: currentAuthor,
-            body: currentMessage.trim(),
+            body: currentMessage.join("\n").trim(),
         });
     }
 
