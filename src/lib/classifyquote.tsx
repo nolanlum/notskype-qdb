@@ -13,9 +13,15 @@ export interface Quote {
 
 /*
 [9:06 PM] Wheatless: wow gj gabe
-[9:06 PM] PJ: [tiff snaps into the sunset
+[9:06 PM] PJ: [tiff snaps into the sunset]
+[2:03 PM] adjective: TASD
+SADA
+AS
+DAS
+DASD
 */
-const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$(\n|\r\n)*)+/m;
+const discordHeaderRegex =
+    /^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)(\r\n|\n|$)/;
 
 /*
 <tttb> Why did the programmer quit his job?
@@ -39,7 +45,7 @@ melanie
 [5:23 PM]
 I just got home, so I'm gonna read them now!
 */
-const slackHeaderRegex = /^(.+?[^\s])( |$(\r\n|\n)?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+const slackVerboseHeaderRegex = /^(.+?[^\s])( |$(\r\n|\n)?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
 
 function parseLog(regex, extractor, rawQuote) {
     let log = [];
@@ -64,7 +70,7 @@ function parseLog(regex, extractor, rawQuote) {
     return log;
 }
 
-function parseSlackLog(rawQuote) {
+function parseMultilineLog(lineRegex, extractor, rawQuote) {
     let log = [];
     let currentAuthor = undefined;
     let currentMessage = [];
@@ -75,7 +81,7 @@ function parseSlackLog(rawQuote) {
             throw Error("log parsing exceeded 1000 loops");
         }
 
-        let match = rawQuote.match(slackHeaderRegex);
+        let match = rawQuote.match(lineRegex);
         if (match) {
             if (currentAuthor !== undefined) {
                 log.push({
@@ -83,8 +89,9 @@ function parseSlackLog(rawQuote) {
                     body: currentMessage.join("\n").trim(),
                 });
             }
-            currentMessage = [];
-            currentAuthor = match[1];
+            let msg = extractor(match);
+            currentMessage = [msg.body];
+            currentAuthor = msg.speaker;
             rawQuote = rawQuote.substring(match[0].length);
         }
 
@@ -118,8 +125,8 @@ function parseSlackLog(rawQuote) {
 
 function discordExtractor(match) {
     return {
-        speaker: match[2],
-        body: match[3]
+        speaker: match[1],
+        body: match[2]
     };
 }
 
@@ -132,20 +139,19 @@ function ircExtractor(match) {
 }
 
 function slackExtractor(match) {
-    console.log(match);
     return {
-        speaker: match[2],
-        body: match[7]
+        speaker: match[1],
+        body: ""
     };
 }
 
 function classifyQuote(rawPaste : string) : Quote {
     let match;
-    match = rawPaste.match(discordRegex);
-    if (match && match[0] === rawPaste) {
+    match = rawPaste.match(discordHeaderRegex);
+    if (match) {
         return {
             type: "discord",
-            messages: parseLog(discordRegex, discordExtractor, rawPaste),
+            messages: parseMultilineLog(discordHeaderRegex, discordExtractor, rawPaste),
         };
     }
 
@@ -157,11 +163,11 @@ function classifyQuote(rawPaste : string) : Quote {
         };
     }
 
-    match = rawPaste.match(slackHeaderRegex);
+    match = rawPaste.match(slackVerboseHeaderRegex);
     if (match) {
         return {
             type: "slack",
-            messages: parseSlackLog(rawPaste)
+            messages: parseMultilineLog(slackVerboseHeaderRegex, slackExtractor, rawPaste)
         };
     } else if (match) {
         console.log("rejected partial match", match);
