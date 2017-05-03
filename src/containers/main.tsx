@@ -10,6 +10,7 @@ const placeholderIcon = "https://placeholdit.imgix.net/~text?txtsize=8&txt=64%C3
 
 const lipsum = [
     "anime was a big mistake",
+    "<tttb> Why did the programmer quit his job?\n<tttb> Because he didn't get arrays\n<zzz> boo, that was terrible",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non dui ex. Vestibulum pretium eget ante ac euismod. Nam fermentum urna a neque commodo, nec feugiat risus porttitor. Sed quis porttitor tortor. Quisque venenatis, arcu ut tristique consequat, odio orci consequat libero, ullamcorper scelerisque tellus turpis ut metus. Sed sit amet urna quis ante blandit porttitor. Donec a orci ut nisi ornare pulvinar ornare non quam",
 
     "Cras quam nulla, pellentesque at fringilla in, euismod in leo. Nullam id diam leo. Integer ullamcorper aliquet sollicitudin. In scelerisque risus ac vehicula accumsan. Nullam vel lectus vel dui posuere dictum sit amet vitae tortor. Sed cursus justo eget est egestas varius. Nullam auctor orci ex, a bibendum mauris viverra sit amet. Vestibulum sem est, vehicula vitae nisl non, finibus feugiat lacus. Aenean et tincidunt elit. Ut id ante et dolor dignissim malesuada. Nulla et dolor dolor. Donec pharetra, velit sed rutrum sagittis, turpis tellus dictum risus, eu rutrum dolor erat vel ante. Praesent ultricies mi eget turpis gravida blandit. Etiam ut mollis tellus, vel eleifend tellus.",

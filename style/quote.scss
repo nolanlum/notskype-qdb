@@ -49,3 +49,28 @@ $ratio: 2.8284271247 / 2;
     }
 
 }
+
+.quote-segment {
+
+    &-icon {
+        border-radius: 2px;
+        width: 3 * $gu;
+        height: 3 * $gu;
+        float: left;
+        margin-right: $gu;
+    }
+
+    &-speaker {
+        display: block;
+        font-weight: bold;
+        font-style: none;
+    }
+
+    &-body {
+        display: inline-block;
+    }
+
+    &.follow &-body {
+        margin-left: 4 * $gu;
+    }
+}
