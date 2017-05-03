@@ -1,7 +1,5 @@
 var webpack = require("webpack");
 var path = require("path")
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var CopyWebpackPlugin = require("copy-webpack-plugin");
 var NodeExternals = require("webpack-node-externals");
 
 module.exports = {
@@ -15,6 +13,7 @@ module.exports = {
     cache: true,
     devtool: "inline-source-map",
     target: "node",
+    externals: [NodeExternals()],
     resolve: {
         extensions: [".ts", ".js", ".tsx", ".jsx"],
     },
@@ -34,27 +33,6 @@ module.exports = {
                 },
                 enforce: "pre"
             },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    loader: [
-                        "css-loader",
-                        "postcss-loader",
-                        "sass-loader"
-                    ]
-                })
-            }
         ],
     },
-    plugins: [
-        // new webpack.optimize.UglifyJsPlugin([]),
-        new ExtractTextPlugin({
-            filename: "qdb.bundle.css",
-            allChunks: true
-        }),
-        new CopyWebpackPlugin([
-            { from: "static" } // Copy contents of /static to /dist/client/
-        ])
-    ]
 }

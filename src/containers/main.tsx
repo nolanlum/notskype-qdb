@@ -80,7 +80,7 @@ class Main extends Component<{}, MainState> {
     }
 
     onSubmit(quote : ClassifiedQuote) {
-        let payload = quote.message ? quote.message : quote.messages.join("\n");
+        let payload = JSON.stringify(quote);
         this.api_handle.qdbQuotePost({
             body: {
                 body: payload
@@ -89,13 +89,15 @@ class Main extends Component<{}, MainState> {
     }
 
     render() {
-        const quoteSource = this.state.searching ? this.state.searchQuotes : this.state.quotes;
-        console.log(this.state.searchQuotes, this.state.quotes, quoteSource);
-        const quotes = quoteSource.map((quote) => {
+        let {searching, searchQuotes, quotes, fetching} =
+            this.state;
+        const quoteSource = searching ? searchQuotes : quotes;
+        console.log(searchQuotes, quotes, quoteSource);
+        const quoteElements = quoteSource.map((quote) => {
             return(<Quote
                 id={ quote.id }
                 author={ quote.author }
-                body={ quote.body }
+                body={ JSON.parse(quote.body) }
                 addedAt={ quote.addedAt }
                 />);
         });
@@ -105,10 +107,10 @@ class Main extends Component<{}, MainState> {
                 <SearchBar onSearch={ this.onSearch.bind(this) } />
                 <PasteInput onSubmit={ this.onSubmit.bind(this) } />
                 <section class={ "quote-container" }>
-                    { quotes }
+                    { quoteElements }
                     <button
                         class={ "load-more" }
-                        disabled={ this.state.fetching }
+                        disabled={ fetching }
                         onClick={ this.loadMore.bind(this) }>
                         Load More
                     </button>
