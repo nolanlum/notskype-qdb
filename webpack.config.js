@@ -12,7 +12,7 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     cache: true,
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-source-map',
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
     },
