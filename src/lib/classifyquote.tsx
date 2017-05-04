@@ -13,21 +13,15 @@ export interface Quote {
 
 /*
 [9:06 PM] Wheatless: wow gj gabe
-[9:06 PM] PJ: [tiff snaps into the sunset]
-[2:03 PM] adjective: TASD
-SADA
-AS
-DAS
-DASD
+[9:06 PM] PJ: [tiff snaps into the sunset
 */
-const discordHeaderRegex =
-    /^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)(\r\n|\n|$)/;
+const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$\n*)+/m;
 
 /*
 <tttb> Why did the programmer quit his job?
 <tttb> because he didn't get arrays
 */
-const ircRegex = /(^<([^\s]+)> (.+?)$(\n|\r\n)?)+/m;
+const ircRegex = /(^<([^\s]+)> (.+?)$\n?)+/m;
 
 /*
 Tiffany [5:15 PM]
@@ -45,7 +39,7 @@ melanie
 [5:23 PM]
 I just got home, so I'm gonna read them now!
 */
-const slackVerboseHeaderRegex = /^(.+?[^\s])( |$(\r\n|\n)?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+const slackHeaderRegex = /^(.+?[^\s])( |$\n?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
 
 function parseLog(regex, extractor, rawQuote) {
     let log = [];
@@ -70,10 +64,10 @@ function parseLog(regex, extractor, rawQuote) {
     return log;
 }
 
-function parseMultilineLog(lineRegex, extractor, rawQuote) {
+function parseSlackLog(rawQuote) {
     let log = [];
     let currentAuthor = undefined;
-    let currentMessage = [];
+    let currentMessage = "";
     let i = 0;
     while (rawQuote !== "") {
         if (i++ > 1000) {
@@ -81,42 +75,35 @@ function parseMultilineLog(lineRegex, extractor, rawQuote) {
             throw Error("log parsing exceeded 1000 loops");
         }
 
-        let match = rawQuote.match(lineRegex);
+        let match = rawQuote.match(slackHeaderRegex);
         if (match) {
             if (currentAuthor !== undefined) {
                 log.push({
                     speaker: currentAuthor,
-                    body: currentMessage.join("\n").trim(),
+                    body: currentMessage.trim(),
                 });
             }
-            let msg = extractor(match);
-            currentMessage = [msg.body];
-            currentAuthor = msg.speaker;
+            currentMessage = "";
+            currentAuthor = match[1];
             rawQuote = rawQuote.substring(match[0].length);
         }
 
         else {
-            let lineStart = rawQuote.indexOf("\r\n");
-            if (lineStart !== -1) {
-                currentMessage.push(rawQuote.substring(0, lineStart));
-                rawQuote = rawQuote.substring(lineStart + 2);
+            let lineStart = rawQuote.indexOf("\n");
+            if (lineStart === -1 ) {
+                lineStart = rawQuote.length;
             } else {
-                lineStart = rawQuote.indexOf("\n");
-                if (lineStart === -1 ) {
-                    currentMessage.push(rawQuote);
-                    rawQuote = "";
-                } else {
-                    currentMessage.push(rawQuote.substring(0, lineStart));
-                    rawQuote = rawQuote.substring(lineStart + 1);
-                }
+                lineStart ++;
             }
+            currentMessage += rawQuote.substring(0, lineStart);
+            rawQuote = rawQuote.substring(lineStart);
         }
     }
 
     if (currentAuthor !== undefined) {
         log.push({
             speaker: currentAuthor,
-            body: currentMessage.join("\n").trim(),
+            body: currentMessage.trim(),
         });
     }
 
@@ -125,8 +112,8 @@ function parseMultilineLog(lineRegex, extractor, rawQuote) {
 
 function discordExtractor(match) {
     return {
-        speaker: match[1],
-        body: match[2]
+        speaker: match[2],
+        body: match[3]
     };
 }
 
@@ -139,19 +126,20 @@ function ircExtractor(match) {
 }
 
 function slackExtractor(match) {
+    console.log(match);
     return {
-        speaker: match[1],
-        body: ""
+        speaker: match[2],
+        body: match[7]
     };
 }
 
 function classifyQuote(rawPaste : string) : Quote {
     let match;
-    match = rawPaste.match(discordHeaderRegex);
-    if (match) {
+    match = rawPaste.match(discordRegex);
+    if (match && match[0] === rawPaste) {
         return {
             type: "discord",
-            messages: parseMultilineLog(discordHeaderRegex, discordExtractor, rawPaste),
+            messages: parseLog(discordRegex, discordExtractor, rawPaste),
         };
     }
 
@@ -163,11 +151,11 @@ function classifyQuote(rawPaste : string) : Quote {
         };
     }
 
-    match = rawPaste.match(slackVerboseHeaderRegex);
+    match = rawPaste.match(slackHeaderRegex);
     if (match) {
         return {
             type: "slack",
-            messages: parseMultilineLog(slackVerboseHeaderRegex, slackExtractor, rawPaste)
+            messages: parseSlackLog(rawPaste)
         };
     } else if (match) {
         console.log("rejected partial match", match);
