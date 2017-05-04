@@ -24,6 +24,31 @@ const discordHeaderRegex =
     /^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)(\r\n|\n|$)/;
 
 /*
+xxKanade - Yesterday at 9:15 PM
+:o
+is that yours
+doom you lose - Yesterday at 9:15 PM
+friend's
+gabriel - Yesterday at 9:15 PM
+DOGE
+
+
+Jay Tau - 04/26/2017
+!aku reload
+!aku liberal media
+!aku sax
+*/
+const windowsDiscordHeaderRegex =
+    /^(.*) - ((.* at \d{1,2}:\d{2} [AP]M)|(\d{2}\/\d{2}\/\d{4}))(\r\n|\n)/;
+
+function windowsDiscordExtractor(match) {
+    return {
+        speaker: match[1],
+        body: "",
+    };
+}
+
+/*
 <tttb> Why did the programmer quit his job?
 <tttb> because he didn't get arrays
 */
@@ -152,6 +177,14 @@ function classifyQuote(rawPaste : string) : Quote {
         return {
             type: "discord",
             messages: parseMultilineLog(discordHeaderRegex, discordExtractor, rawPaste),
+        };
+    }
+
+    match = rawPaste.match(windowsDiscordHeaderRegex);
+    if (match) {
+        return {
+            type: "discord",
+            messages: parseMultilineLog(windowsDiscordHeaderRegex, windowsDiscordExtractor, rawPaste),
         };
     }
 
