@@ -38,10 +38,9 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
                     type="text"
                     name="search"
                     placeholder="search qdb"
-                    onInput={this.__handleSearchbarUpdate.bind(this)
-                    }>
-                        this.state.searchQuery
-                    </input>
+                    onInput={this.__handleSearchbarUpdate.bind(this)}
+                    value={this.state.searchQuery}
+                    />
             </form>
         );
     }
