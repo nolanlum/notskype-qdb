@@ -3,8 +3,8 @@ import * as express from "express";
 import * as proxy from "http-proxy-middleware";
 import InfernoServer from "inferno-server";
 
-import {RouterContext, match} from 'inferno-router';
-import routes from './routes';
+import {RouterContext, match} from "inferno-router";
+import routes from "./routes";
 
 let app = express();
 app.use("/api", proxy({

@@ -1,16 +1,16 @@
 import Component from "inferno-component";
 
-import Quote from '../components/quote';
+import Quote from "../components/quote";
 import * as api from "../api/api";
 
 interface PermalinkQuoteProps {
     params : {
         id : number,
-    },
+    };
 }
 
 interface PermalinkQuoteState {
-    quote: api.Quote | null
+    quote : api.Quote | null;
 }
 
 class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState> {
@@ -22,7 +22,7 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
         this.api_handle = new api.QuoteApi();
         this.state = {
             quote: null
-        }
+        };
 
         this.updateQuotes(props.params.id);
     }
@@ -31,7 +31,7 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
         console.log(nextProps);
         this.setState({
             quote: null
-        })
+        });
         this.updateQuotes(nextProps.params.id);
     }
 
@@ -48,7 +48,7 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
     render() {
         if (this.state && this.state.quote) {
             let {quote} = this.state;
-                return <section>
+            return <section>
                     <Quote
                         id={ quote.id }
                         author={ quote.author }
@@ -56,11 +56,11 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
                         addedAt={ quote.addedAt }
                         />
                 </section>
-        } else {
+   ;     } else {
             return <section>
                 <h2>loading quote..</h2>
             </section>
-        }
+   ;     }
 
     }
 }

@@ -1,5 +1,5 @@
 import Component from "inferno-component";
-import {Router} from 'inferno-router';
+import {Router} from "inferno-router";
 
 import SearchBar from "../components/searchbar";
 import PasteInput from "../components/pasteinput";

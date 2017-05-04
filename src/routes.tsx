@@ -1,4 +1,4 @@
-import { Router, Route, IndexRoute } from 'inferno-router';
+import { Router, Route, IndexRoute } from "inferno-router";
 import Component from "inferno-component";
 
 import ApplicationFrame from "./containers/applicationframe";
@@ -10,4 +10,4 @@ export default <Route component={ ApplicationFrame }>
                     <IndexRoute component={ Main }/>
                     <Route path="/quote/:id" component={ PermalinkQuote } />
                     <Route path="/search/:query" component={ Search } />
-                </Route>
+                </Route>;
