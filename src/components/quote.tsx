@@ -45,8 +45,10 @@ const Quote = ({id, author, body, addedAt}) => {
         }
     }
 
+    let quoteClass = body.type;
+
     return (
-        <article class="quote">
+        <article class={"quote " + quoteClass}>
             <section class="quote-body">
                 <p class="quote-text">{bodyElements}</p>
             </section>
