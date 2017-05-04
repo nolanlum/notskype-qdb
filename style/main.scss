@@ -1,9 +1,26 @@
 @import "colors.scss";
 
 .main-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
     background-color: $theme-background-dark;
     background-position: fixed;
     background-size: cover;
+    
+    .load-more {
+        width: 100%;
+        max-width: 1000px;
+        margin: 40px;
+        height: 40px;
+        background-color: $theme-background-light;
+        color: $theme-background-dark;
+        border-style: solid;
+        border-color: $theme-background-dark;
+    }
 
     .quote-container {
 

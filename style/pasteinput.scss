@@ -52,5 +52,15 @@
         width: 600px;
         resize: vertical;
     }
+    
+    .paste-submit {
+        width: 100%;
+        margin-top: 5px;
+        height: 40px;
+        background-color: $theme-background-light;
+        color: $theme-background-dark;
+        border-style: solid;
+        border-color: $theme-background-dark;
+    }
 
 }
