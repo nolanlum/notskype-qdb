@@ -21,14 +21,13 @@ const QuoteSegment = ({speaker, displayIcon, body}) => {
 };
 
 const Quote = ({id, author, body, addedAt}) => {
-    const parsedBody = classifyQuote(body);
     let bodyElements;
-    if (parsedBody.type === "unrecognized") {
-        bodyElements = parsedBody.message;
+    if (body.type === "unrecognized") {
+        bodyElements = body.message;
     } else {
         bodyElements = [];
         let previousSpeaker = undefined;
-        for (let message of parsedBody.messages) {
+        for (let message of body.messages) {
             if (previousSpeaker === message.speaker) {
                 bodyElements.push(
                     <QuoteSegment
