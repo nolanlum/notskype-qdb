@@ -33,6 +33,10 @@ module.exports = {
                 },
                 enforce: "pre"
             },
+            {
+                test: /\.scss?$/,
+                loader: "null-loader",
+            },
         ],
     },
 }
