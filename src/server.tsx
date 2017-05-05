@@ -32,4 +32,4 @@ function renderBasePage(initial_dom) {
         </html>`;
 }
 
-app.listen(8000);
+app.listen(8000, "localhost");
