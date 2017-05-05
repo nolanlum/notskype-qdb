@@ -5,6 +5,30 @@ $ratio: 2.8284271247 / 2;
 
 .quote {
 
+    &.discord {
+        .quote-body {
+            outline-color: $discord-color;
+        }
+    }
+
+    &.slack {
+        .quote-body {
+            outline-color: $slack-color;
+        }
+    }
+
+    &.irc {
+        .quote-body {
+            outline-color: $irc-color;
+        }
+    }
+    
+    &.unrecognized {
+        .quote-body {
+            outline-color: $unrecognized-color;
+        }
+    }
+
     & {
         margin: $gu;
         width: 100%;
@@ -21,6 +45,7 @@ $ratio: 2.8284271247 / 2;
         width: 100%;
         padding: 2 * $gu;
         background-color: $theme-background-light;
+        outline: 2px solid transparent;
     }
 
     .quote-profile-icon {
@@ -48,4 +73,29 @@ $ratio: 2.8284271247 / 2;
         background-color: $theme-background-light;
     }
 
+}
+
+.quote-segment {
+
+    &-icon {
+        border-radius: 2px;
+        width: 3 * $gu;
+        height: 3 * $gu;
+        float: left;
+        margin-right: $gu;
+    }
+
+    &-speaker {
+        display: block;
+        font-weight: bold;
+        font-style: none;
+    }
+
+    &-body {
+        display: inline-block;
+    }
+
+    &.follow &-body {
+        margin-left: 4 * $gu;
+    }
 }
