@@ -1,23 +1,22 @@
 @import "colors.scss";
 
 .searchbar {
-    width: 100%;
+    display: inline-block;
+    margin-left: auto;
     padding: 1px;
 }
 
 .searchbar-input {
-    display: block;
-    appearance: none;
+    display: inline-block;
     outline: none;
     border: none;
     border-style: solid;
     border-width: 1px;
     border-color: $theme-border-light;
-    width: 400px;
-    padding: 1 * $gu;
-    margin: 2 * $gu auto 2 * $gu auto;
+    width: 200px;
 
-    font-size: 2 * $gu;
+    padding: 0.5 * $gu;
+    font-size: $gu;
 
     position: relative;
 

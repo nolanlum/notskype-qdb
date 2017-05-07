@@ -32,9 +32,9 @@ $ratio: 2.8284271247 / 2;
     & {
         margin: $gu;
         width: 100%;
-        width: 600px;
+        max-width: 800px;
         position: relative;
-        margin-bottom: 2 * $gu;
+        margin-bottom: 4 * $gu;
     
 
         display: flex;
@@ -76,26 +76,14 @@ $ratio: 2.8284271247 / 2;
 }
 
 .quote-segment {
-
-    &-icon {
-        border-radius: 2px;
-        width: 3 * $gu;
-        height: 3 * $gu;
-        float: left;
-        margin-right: $gu;
-    }
-
     &-speaker {
         display: block;
         font-weight: bold;
-        font-style: none;
+        font-style: normal;
+        margin-top: 10px;
     }
 
     &-body {
         display: inline-block;
-    }
-
-    &.follow &-body {
-        margin-left: 4 * $gu;
     }
 }

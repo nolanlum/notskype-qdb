@@ -1,0 +1,48 @@
+@import 'colors.scss';
+
+.nav-container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background: $theme-background-dark;
+    width: 100%;
+    max-width: 1000px;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+    border-color: $theme-foreground-light;
+    padding: 0 $gu;
+    
+    .nav-links {
+        display: inline-block;
+        list-style: none;
+        height: 100%;
+    }
+    
+    .nav-link-item {
+        display: inline-flex;
+        height: 100%;
+        align-items: center;
+    }
+    
+    .nav-link-item a {
+        color: $theme-foreground-light;
+        text-decoration: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        height: 80%;
+        width: 100px;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    }
+    
+    .nav-link-item a:hover {
+        color: $theme-background-dark;
+        background-color: $theme-foreground-light;
+    }
+}

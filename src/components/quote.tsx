@@ -5,15 +5,12 @@ import classifyQuote from "../lib/classifyquote";
 
 require("../../style/quote.scss");
 
-const QuoteSegment = ({speaker, displayIcon, body}) => {
-    let showUserInfo = speaker || displayIcon;
+const QuoteSegment = ({speaker, body}) => {
+    let showUserInfo = speaker;
     return (
         <section class={showUserInfo ? "quote-segment" : "quote-segment follow"}>
             {showUserInfo ?
-                [
-                    <img class="quote-segment-icon" src={displayIcon}/>,
-                    <em class="quote-segment-speaker">{speaker}</em>
-                ]
+                <em class="quote-segment-speaker">{ speaker }</em>
                 : null}
             <p class="quote-segment-body">{body}</p>
         </section>
@@ -36,7 +33,6 @@ const Quote = ({id, author, body, addedAt}) => {
             } else {
                 bodyElements.push(
                     <QuoteSegment
-                        displayIcon={"https://placehold.it/64x64"}
                         speaker={message.speaker}
                         body={message.body}/>
                 );
