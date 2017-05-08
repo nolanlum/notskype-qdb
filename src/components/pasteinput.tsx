@@ -9,6 +9,7 @@ interface PasteInputProps {
 
 interface PasteInputState {
     quote? : Quote;
+    rawQuote? : string;
 }
 
 export default class PasteInput extends Component<PasteInputProps, PasteInputState> {
@@ -21,12 +22,20 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
 
     __onQuoteChange(evt : Event) {
         let quoteInput : HTMLInputElement = evt.target as HTMLInputElement;
-        let quote = classifyQuote(quoteInput.value);
-        this.setState({quote});
+        let rawQuote = quoteInput.value;
+        let quote = classifyQuote(rawQuote);
+        this.setState({
+            quote: quote,
+            rawQuote: rawQuote
+        });
     }
 
     __onSubmit() {
         this.props.onSubmit(this.state.quote);
+        this.setState({
+            quote: null,
+            rawQuote: ""
+        });
     }
 
     render() {
@@ -41,9 +50,10 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
                     type="text"
                     name="quote"
                     placeholder="paste a quote here"
-                    onInput={this.__onQuoteChange.bind(this)}
+                    onInput={ this.__onQuoteChange.bind(this) }
+                    value={ this.state.rawQuote }
                     />
-                <aside class="paste-box-name">{quoteClass}</aside>
+                <aside class="paste-box-name">{ quoteClass }</aside>
                 <button
                     class="paste-submit"
                     disabled={ this.state.quote === undefined }

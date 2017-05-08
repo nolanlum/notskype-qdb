@@ -1,30 +1,25 @@
 @import "colors.scss";
 
 .searchbar {
-    width: 100%;
+    display: inline-block;
+    position: relative;
+    margin-left: auto;
     padding: 1px;
+    background-color: $theme-border-light;
 }
 
 .searchbar-input {
-    display: block;
-    appearance: none;
+    display: inline-block;
+    position: relative;
     outline: none;
     border: none;
-    border-style: solid;
-    border-width: 1px;
-    border-color: $theme-border-light;
-    width: 400px;
-    padding: 1 * $gu;
-    margin: 2 * $gu auto 2 * $gu auto;
+    width: 200px;
+    padding: 5px;
+    background-color: $theme-border-light;
+    color: $theme-foreground-dark;
+}
 
-    font-size: 2 * $gu;
-
-    position: relative;
-
-    &:focus{
-        border-color: $theme-border-mid;
-    }
-
-    transition: border-color 0.2s;
-
+.searchbar-icon {
+    color: $theme-foreground-light;
+    padding: 5px;
 }
