@@ -2,6 +2,7 @@ import Component from "inferno-component";
 
 import Quote from "../components/quote";
 import Nav from "./nav";
+import Header from "./header";
 
 import { Quote as ClassifiedQuote } from "../lib/classifyquote";
 
@@ -110,6 +111,7 @@ class Main extends Component<{}, MainState> {
                 <Nav
                     onSearch={ this.onSearch.bind(this) }
                     onSubmit={ this.onSubmit.bind(this) } />
+                <Header />
                 <section class={ "quote-container" }>
                     { quoteElements }
                     <button

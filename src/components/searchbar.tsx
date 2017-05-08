@@ -33,9 +33,11 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
         return(
             <form class="searchbar" onSubmit={
                 this.__handleFormSubmit.bind(this)}>
+                <label for="search"><i class="fa fa-search searchbar-icon" aria-hidden="true"></i></label>
                 <input
                     class="searchbar-input"
                     type="text"
+                    id="search"
                     name="search"
                     placeholder="search qdb"
                     onInput={this.__handleSearchbarUpdate.bind(this)}

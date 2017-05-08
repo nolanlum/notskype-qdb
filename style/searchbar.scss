@@ -2,28 +2,24 @@
 
 .searchbar {
     display: inline-block;
+    position: relative;
     margin-left: auto;
     padding: 1px;
+    background-color: $theme-border-light;
 }
 
 .searchbar-input {
     display: inline-block;
+    position: relative;
     outline: none;
     border: none;
-    border-style: solid;
-    border-width: 1px;
-    border-color: $theme-border-light;
     width: 200px;
+    padding: 5px;
+    background-color: $theme-border-light;
+    color: $theme-foreground-dark;
+}
 
-    padding: 0.5 * $gu;
-    font-size: $gu;
-
-    position: relative;
-
-    &:focus{
-        border-color: $theme-border-mid;
-    }
-
-    transition: border-color 0.2s;
-
+.searchbar-icon {
+    color: $theme-foreground-light;
+    padding: 5px;
 }

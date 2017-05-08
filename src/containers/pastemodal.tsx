@@ -15,17 +15,25 @@ export interface PasteModalProps {
 }
 
 export interface PasteModalState {
-
+    quote : ClassifiedQuote;
 }
 
 export default class PasteModal extends Component<PasteModalProps, PasteModalState> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            quote : null
+        };
+    }
+
     render() {
-        console.log(this.props);
         return(
             this.props.visible ?
                 <div class={ "paste-modal-container" }>
                     <div onClick={ this.props.onDismiss.bind(this) } class={ "paste-modal-overlay" }></div>
-                    <PasteInput onSubmit={ this.props.onSubmit.bind(this) } />
+                    <div class={ "paste-modal" }>
+                        <PasteInput onSubmit={ this.props.onSubmit.bind(this) } />
+                    </div>
                 </div>
                 : null
         );

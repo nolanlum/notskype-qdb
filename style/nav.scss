@@ -1,22 +1,24 @@
 @import 'colors.scss';
 
-.nav-container {
+.nav-wrapper {
     position: fixed;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: center;
     z-index: 1;
+    width: 100%;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: $theme-border-light;
+}
+
+.nav-container {
     display: flex;
     align-items: center;
     height: 50px;
-    background: $theme-background-dark;
     width: 100%;
     max-width: 1000px;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    border-color: $theme-foreground-light;
     padding: 0 $gu;
+    background-color: $theme-background-light;
     
     .nav-links {
         display: inline-block;
@@ -31,7 +33,8 @@
     }
     
     .nav-link-item a {
-        color: $theme-foreground-light;
+        font-weight: bold;
+        color: $theme-foreground-dark;
         text-decoration: none;
         display: inline-flex;
         justify-content: center;
@@ -42,7 +45,7 @@
     }
     
     .nav-link-item a:hover {
-        color: $theme-background-dark;
-        background-color: $theme-foreground-light;
+        color: $theme-background-light;
+        background-color: $theme-foreground-dark;
     }
 }

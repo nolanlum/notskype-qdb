@@ -7,23 +7,22 @@
     left: 0;
     right: 0;
     overflow-y: scroll;
-    background-color: $theme-background-dark;
+    background-color: $theme-background-light;
     background-position: fixed;
     background-size: cover;
     
     .load-more {
         width: 100%;
-        max-width: 1000px;
+        max-width: 400px;
         margin: 40px;
         height: 40px;
-        background-color: $theme-background-light;
-        color: $theme-background-dark;
-        border-style: solid;
-        border-color: $theme-background-dark;
+        background-color: $theme-foreground-light;
+        color: $theme-background-light;
+        border-style: none;
+        cursor: pointer;
     }
 
     .quote-container {
-
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -33,6 +32,6 @@
 
         padding: 2 * $gu;
         max-width: 800px;
-        margin: 50px auto 0 auto;
+        margin: 0 auto 0 auto;
     }
 }

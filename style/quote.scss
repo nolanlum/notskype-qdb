@@ -4,67 +4,57 @@ $iconsize: 64px;
 $ratio: 2.8284271247 / 2;
 
 .quote {
-
+    /*
     &.discord {
         .quote-body {
-            outline-color: $discord-color;
+            border-color: $discord-color;
         }
     }
 
     &.slack {
         .quote-body {
-            outline-color: $slack-color;
+            border-color: $slack-color;
         }
     }
 
     &.irc {
         .quote-body {
-            outline-color: $irc-color;
+            border-color: $irc-color;
         }
     }
     
     &.unrecognized {
         .quote-body {
-            outline-color: $unrecognized-color;
+            border-color: $unrecognized-color;
         }
     }
+    */
 
     & {
         margin: $gu;
         width: 100%;
         max-width: 800px;
         position: relative;
-        margin-bottom: 4 * $gu;
-    
-
-        display: flex;
-        align-items: flex-end;
+        border-style: solid;
+        border-width: 1px;
+        border-color: $theme-border-light;
+        box-shadow: 8px 8px $theme-box-shadow;
     }
 
     .quote-body {
         width: 100%;
         padding: 2 * $gu;
         background-color: $theme-background-light;
-        outline: 2px solid transparent;
-    }
-
-    .quote-profile-icon {
-        border-radius: 50%;
-        width: $iconsize;
-        height: $iconsize;
-        flex-shrink: 0;
-        transform: translate(0.9 * $gu, -0.9 * $gu);
+        border-style: solid;
+        border-width: 0 0 1px 0;
+        border-color: $theme-border-light;
     }
 
     .quote-timestamp {
         font-style: italic;
         text-align: right;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        margin-top: 0.5 * $gu;
-        opacity: 0.5;
-        color: $theme-foreground-light;
+        color: $theme-foreground-extra-light;
+        padding: 5px;
     }
 
     .quote-text {
