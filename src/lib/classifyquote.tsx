@@ -70,7 +70,10 @@ melanie
 [5:23 PM]
 I just got home, so I'm gonna read them now!
 */
-const slackVerboseHeaderRegex = /^(.+?[^\s])( |$(\r\n|\n)?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+const slackVerboseHeaderRegex = /^(.+?[^\s])( ?(\r\n|\n)?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+
+// Ignore timestamps in slack logs
+const slackIgnoreRegex = /^\s*\[\d{1,2}:\d{2}( (A|P)M)?\]\s*/;
 
 function parseLog(regex, extractor, rawQuote) {
     let log = [];
@@ -95,7 +98,7 @@ function parseLog(regex, extractor, rawQuote) {
     return log;
 }
 
-function parseMultilineLog(lineRegex, extractor, rawQuote) {
+function parseMultilineLog(lineRegex, extractor, rawQuote, ignore?) {
     let log = [];
     let currentAuthor = undefined;
     let currentMessage = [];
@@ -104,6 +107,15 @@ function parseMultilineLog(lineRegex, extractor, rawQuote) {
         if (i++ > 1000) {
             // error case for infinite reppetition
             throw Error("log parsing exceeded 1000 loops");
+        }
+
+        if (ignore) {
+            let ignoreMatch = rawQuote.match(ignore);
+            if (ignoreMatch) {
+                let lineStart = rawQuote.indexOf("\n");
+                rawQuote = rawQuote.substring(lineStart + 1);
+                continue;
+            }
         }
 
         let match = rawQuote.match(lineRegex);
@@ -118,9 +130,7 @@ function parseMultilineLog(lineRegex, extractor, rawQuote) {
             currentMessage = [msg.body];
             currentAuthor = msg.speaker;
             rawQuote = rawQuote.substring(match[0].length);
-        }
-
-        else {
+        } else {
             let lineStart = rawQuote.indexOf("\r\n");
             if (lineStart !== -1) {
                 currentMessage.push(rawQuote.substring(0, lineStart));
@@ -200,7 +210,7 @@ function classifyQuote(rawPaste : string) : Quote {
     if (match) {
         return {
             type: "slack",
-            messages: parseMultilineLog(slackVerboseHeaderRegex, slackExtractor, rawPaste)
+            messages: parseMultilineLog(slackVerboseHeaderRegex, slackExtractor, rawPaste, slackIgnoreRegex)
         };
     } else if (match) {
         console.log("rejected partial match", match);

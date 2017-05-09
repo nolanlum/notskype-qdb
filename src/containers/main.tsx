@@ -81,7 +81,16 @@ class Main extends Component<{}, MainState> {
     }
 
     onSubmit(quote : ClassifiedQuote) {
-        let payload = JSON.stringify(quote);
+        let payload = "";
+        if (quote.message) {
+            payload = quote.message;
+        } else {
+            quote.messages.map((message) => {
+                message.body.split("\n").map((line) => {
+                    payload = payload.concat(`<${message.speaker}> ${line}\n`);
+                });
+            });
+        }
         this.api_handle.qdbQuotePost({
             body: {
                 body: payload
@@ -101,7 +110,7 @@ class Main extends Component<{}, MainState> {
             return(<Quote
                 id={ quote.id }
                 author={ quote.author }
-                body={ JSON.parse(quote.body) }
+                body={ quote.body }
                 addedAt={ quote.addedAt }
                 />);
         });

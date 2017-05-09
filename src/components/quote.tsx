@@ -5,6 +5,28 @@ import classifyQuote from "../lib/classifyquote";
 
 require("../../style/quote.scss");
 
+const lineRegex = /<([^>]+)> (.+)/;
+
+interface Line {
+    speaker : string;
+    body : string;
+}
+
+function parseBody(body) : Line[] {
+    let lines = body.split("\n").map((line) : Line => {
+        let match = line.match(lineRegex);
+        if (match) {
+            return {
+                speaker: match[1],
+                body: match[2]
+            };
+        }
+    });
+
+    return lines.filter((line) => { return line !== undefined; });
+}
+
+
 const QuoteSegment = ({speaker, body}) => {
     let showUserInfo = speaker;
     return (
@@ -19,32 +41,28 @@ const QuoteSegment = ({speaker, body}) => {
 
 const Quote = ({id, author, body, addedAt}) => {
     let bodyElements;
-    if (body.type === "unrecognized") {
-        bodyElements = body.message;
-    } else {
-        bodyElements = [];
-        let previousSpeaker = undefined;
-        for (let message of body.messages) {
-            if (previousSpeaker === message.speaker) {
-                bodyElements.push(
-                    <QuoteSegment
-                        body={message.body}/>
-                );
-            } else {
-                bodyElements.push(
-                    <QuoteSegment
-                        speaker={message.speaker}
-                        body={message.body}/>
-                );
-            }
-            previousSpeaker = message.speaker;
+    bodyElements = [];
+    let previousSpeaker = undefined;
+    let messages = parseBody(body);
+    console.log(messages);
+    for (let message of messages) {
+        if (previousSpeaker === message.speaker) {
+            bodyElements.push(
+                <QuoteSegment
+                    body={message.body}/>
+            );
+        } else {
+            bodyElements.push(
+                <QuoteSegment
+                    speaker={message.speaker}
+                    body={message.body}/>
+            );
         }
+        previousSpeaker = message.speaker;
     }
 
-    let quoteClass = body.type;
-
     return (
-        <article class={"quote " + quoteClass}>
+        <article class="quote">
             <section class="quote-body">
                 <p class="quote-text">{bodyElements}</p>
             </section>
