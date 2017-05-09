@@ -33,8 +33,17 @@ describe("classifyQuote", function() {
             ]
         });
 
-
     });
+
+    it("should parse a discord log with crlf", function() {
+        expect(classifyQuote("[12:46 AM] Jay Tau: !aku texas\r\n[12:46 AM] Jay Tau: !aku texas")).toEqual({
+            type: "discord",
+            messages: [
+                { speaker: "Jay Tau", body: "!aku texas" },
+                { speaker: "Jay Tau", body: "!aku texas" },
+            ]
+        });
+    })
 
     it("should reject not-quite discord logs", function() {
         reject("[9:06 ZM] PJ: [tiff snaps into the sunset]");
@@ -66,6 +75,16 @@ describe("classifyQuote", function() {
         });
 
     });
+
+    it("should parse an irc log with crlf", function() {
+        expect(classifyQuote("<tttb> its yaboi\r\n<llc> ayy lmao")).toEqual({
+            type: "irc",
+            messages: [
+                { speaker: "tttb", body: "its yaboi" },
+                { speaker: "llc", body: "ayy lmao" },
+            ]
+        });
+    })
 
     it("should reject not-quite irc logs", function() {
         reject("<asd > askdhjalskjdh");
@@ -122,6 +141,18 @@ describe("classifyQuote", function() {
         });
 
     });
+
+
+    it("should parse a crlf slack log", function() {
+        expect(classifyQuote("Tiffany [05:15 AM]\n"+
+            "shucks\r\n"+
+            "golly\r\n")).toEqual({
+            type: "slack",
+            messages: [
+                { speaker: "Tiffany", body: "shucks\ngolly" },
+            ]
+        });        
+    })
 
     it("should reject not-quite slack logs", function() {
         reject("Tiffany [500:15 PM]\n" +
