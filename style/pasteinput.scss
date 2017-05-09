@@ -1,48 +1,50 @@
 @import 'colors.scss';
 
 .paste-box {
-
-
-    margin: 0 auto 0 auto;
+    position: fixed;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 600px;
 
     &.discord {
         .paste-box-input {
-            outline-color: #7289DA;
+            outline-color: $discord-color;
         }
 
         .paste-box-name {
-            color: #7289DA;
+            color: $discord-color;
         }
     }
 
     &.slack {
         .paste-box-input {
-            outline-color: #CE1F5B;
+            outline-color: $slack-color;
         }
 
         .paste-box-name {
-            color: #CE1F5B;
+            color: $slack-color;
         }
     }
 
     &.irc {
         .paste-box-input {
-            outline-color: #78D4B6;
+            outline-color: $irc-color;
         }
 
         .paste-box-name {
-            color: #78D4B6;
+            color: $irc-color;
         }
     }
     
     &.unrecognized {
         .paste-box-input {
-            outline-color: #666666;
+            outline-color: $unrecognized-color;
         }
 
         .paste-box-name {
-            color: #666666;
+            color: $unrecognized-color;
         }
     }
 
@@ -58,9 +60,9 @@
         margin-top: 5px;
         height: 40px;
         background-color: $theme-background-light;
-        color: $theme-background-dark;
+        color: $theme-foreground-dark;
         border-style: solid;
-        border-color: $theme-background-dark;
+        border-color: $theme-border-light;
     }
 
 }
