@@ -9,6 +9,6 @@ export default class Header extends Component<{}, {}> {
                 <h1 class={ "qdb-header-name" }>qdb.esports.moe</h1>
                 <h1 class={ "qdb-header-slogan" }>we say dumb shit</h1>
             </header>
-        )
+        );
     }
 }
