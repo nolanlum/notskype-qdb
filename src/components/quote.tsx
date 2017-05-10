@@ -6,10 +6,16 @@ import classifyQuote from "../lib/classifyquote";
 require("../../style/quote.scss");
 
 const lineRegex = /<([^>]+)> (.+)/;
+const multilineRegex = /(^<([^>]+)> (.+)$(?:\r\n|\n)?)+/m;
 
 interface Line {
     speaker : string;
     body : string;
+}
+
+function isFormattedMessage(str) {
+    let match = str.match(multilineRegex);
+    return match && match[0] === str;
 }
 
 function parseBody(body) : Line[] {
@@ -43,22 +49,30 @@ const Quote = ({id, author, body, addedAt}) => {
     let bodyElements;
     bodyElements = [];
     let previousSpeaker = undefined;
-    let messages = parseBody(body);
-    console.log(messages);
-    for (let message of messages) {
-        if (previousSpeaker === message.speaker) {
-            bodyElements.push(
-                <QuoteSegment
-                    body={message.body}/>
-            );
-        } else {
-            bodyElements.push(
-                <QuoteSegment
-                    speaker={message.speaker}
-                    body={message.body}/>
-            );
+
+    if (isFormattedMessage(body)) {
+        // if the quote is normalized to an irc format, display it
+        // as a back & forth
+        let messages = parseBody(body);
+        for (let message of messages) {
+            if (previousSpeaker === message.speaker) {
+                bodyElements.push(
+                    <QuoteSegment
+                        body={message.body}/>
+                );
+            } else {
+                bodyElements.push(
+                    <QuoteSegment
+                        speaker={message.speaker}
+                        body={message.body}/>
+                );
+            }
+            previousSpeaker = message.speaker;
         }
-        previousSpeaker = message.speaker;
+    } else {
+        // if the message is not formatted as IRC (not recognized on submit)
+        // render the text as raw
+        bodyElements.push(body);
     }
 
     return (

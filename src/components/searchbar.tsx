@@ -13,6 +13,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
     constructor(props) {
         super(props);
+
         this.state = {
             searchQuery : ""
         };

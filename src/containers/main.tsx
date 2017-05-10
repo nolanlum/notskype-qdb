@@ -17,8 +17,6 @@ export interface MainState {
     quotes : api.Quote[];
     offset : number;
     fetching : boolean;
-    searchQuotes : api.Quote[];
-    searching : boolean;
 }
 
 class Main extends Component<{}, MainState> {
@@ -30,8 +28,6 @@ class Main extends Component<{}, MainState> {
             quotes: [],
             offset: 0,
             fetching: false,
-            searchQuotes: [],
-            searching: false
         };
 
         this.api_handle = new api.QuoteApi();
@@ -57,56 +53,9 @@ class Main extends Component<{}, MainState> {
 
     }
 
-    onSearch(query : string) {
-        this.state.fetching = true;
-        if (query.length === 0) {
-            this.setState({
-                searchQuotes: [],
-                searching: false,
-                fetching: false
-            });
-            console.log(this.state);
-        } else {
-            this.api_handle.qdbQuoteFind({
-                query: query
-            }).then((quotes) => {
-                this.setState({
-                    searchQuotes: quotes,
-                    offset: 0,
-                    fetching: false,
-                    searching: true
-                });
-            });
-        }
-    }
-
-    onSubmit(quote : ClassifiedQuote) {
-        let payload = "";
-        if (quote.message) {
-            payload = quote.message;
-        } else {
-            quote.messages.map((message) => {
-                message.body.split("\n").map((line) => {
-                    payload = payload.concat(`<${message.speaker}> ${line}\n`);
-                });
-            });
-        }
-        this.api_handle.qdbQuotePost({
-            body: {
-                body: payload
-            }
-        })
-        .then(() => {
-            location.reload();
-        });
-    }
-
     render() {
-        let {searching, searchQuotes, quotes, fetching} =
-            this.state;
-        const quoteSource = searching ? searchQuotes : quotes;
-        console.log(searchQuotes, quotes, quoteSource);
-        const quoteElements = quoteSource.map((quote) => {
+        let {quotes, fetching} = this.state;
+        const quoteElements = quotes.map((quote) => {
             return(<Quote
                 id={ quote.id }
                 author={ quote.author }
@@ -117,10 +66,6 @@ class Main extends Component<{}, MainState> {
 
         return(
             <section class={ "main-container" }>
-                <Nav
-                    onSearch={ this.onSearch.bind(this) }
-                    onSubmit={ this.onSubmit.bind(this) } />
-                <Header />
                 <section class={ "quote-container" }>
                     { quoteElements }
                     <button

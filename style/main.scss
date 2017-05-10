@@ -1,12 +1,6 @@
 @import "colors.scss";
 
 .main-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow-y: scroll;
     background-color: $theme-background-light;
     background-position: fixed;
     background-size: cover;
@@ -21,17 +15,18 @@
         border-style: none;
         cursor: pointer;
     }
+}
 
-    .quote-container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        align-items: middle;
-        justify-content: center;
 
-        padding: 2 * $gu;
-        max-width: 800px;
-        margin: 0 auto 0 auto;
-    }
+.quote-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: middle;
+    justify-content: center;
+
+    padding: 2 * $gu;
+    max-width: 800px;
+    margin: 0 auto 0 auto;
 }

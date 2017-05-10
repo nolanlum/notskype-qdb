@@ -1,10 +1,15 @@
-import Main from "./containers/main";
 import Inferno from "inferno";
-import * as api from "./api/api";
+import {Router} from "inferno-router";
+import routes from "./routes";
 
 require("../style/app.scss");
 
+import createBrowserHistory from "history/createBrowserHistory";
+export let browserHistory = createBrowserHistory();
+
 let container = document.getElementById("inferno-host");
 if (container) {
-    Inferno.render(<Main />, container);
+    Inferno.render(<Router history={browserHistory}>
+            {routes}
+        </Router>, container);
 }
