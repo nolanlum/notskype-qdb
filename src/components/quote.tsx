@@ -80,7 +80,7 @@ const Quote = ({id, author, body, addedAt}) => {
             <section class="quote-body">
                 <p class="quote-text">{bodyElements}</p>
             </section>
-            <aside class="quote-timestamp">added by {author} {moment(new Date(addedAt)).fromNow()}</aside>
+            <aside><a class="quote-timestamp" href={`/quote/${id}`}>added by {author} {moment(new Date(addedAt)).fromNow()}</a></aside>
         </article>
     );
 };
