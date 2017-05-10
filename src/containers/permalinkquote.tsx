@@ -13,7 +13,6 @@ interface PermalinkQuoteState {
     quote : api.Quote | null;
 }
 
-
 class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState> {
 
     protected api_handle : api.QuoteApi;
