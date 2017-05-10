@@ -48,12 +48,12 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
     render() {
         if (this.state && this.state.quotes) {
             let {quotes} = this.state;
-            return <section>
+            return <section class="quote-container">
                     {quotes.map((quote) =>
                         <Quote
                             id={ quote.id }
                             author={ quote.author }
-                            body={ JSON.parse(quote.body) }
+                            body={ quote.body }
                             addedAt={ quote.addedAt }
                         />)}
                 </section>
