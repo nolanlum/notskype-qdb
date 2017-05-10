@@ -1,6 +1,8 @@
 import Component from "inferno-component";
 import {Router} from "inferno-router";
 
+import Nav from "../containers/nav";
+import Header from "../containers/header";
 import SearchBar from "../components/searchbar";
 import PasteInput from "../components/pasteinput";
 
@@ -31,21 +33,35 @@ class ApplicationFrame extends Component<{}, {}> {
         this.router.push(`/search/${escapedQuery}`);
     }
 
-    __onPasteSubmit(quote : ClassifiedQuote) {
-        let payload = JSON.stringify(quote);
+    __onSubmit(quote : ClassifiedQuote) {
+        let payload = "";
+        if (quote.message) {
+            payload = quote.message;
+        } else {
+            // normalize the message as an irc-style log
+            quote.messages.map((message) => {
+                message.body.split("\n").map((line) => {
+                    payload = payload.concat(`<${message.speaker}> ${line}\n`);
+                });
+            });
+        }
         this.api_handle.qdbQuotePost({
             body: {
                 body: payload
             }
+        })
+        .then(() => {
+            location.reload();
         });
-
     }
 
     render() {
         return (
             <section class={ "application-container" }>
-                <SearchBar onSearch={ this.__onSearch.bind(this) } />
-                <PasteInput onSubmit={ this.__onPasteSubmit.bind(this) } />
+                <Nav
+                    onSearch={ this.__onSearch.bind(this) }
+                    onSubmit={ this.__onSubmit.bind(this) } />
+                <Header />
                 {this.props.children}
             </section>
 

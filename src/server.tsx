@@ -30,6 +30,7 @@ function renderBasePage(initial_dom) {
         <head>
             <title>qdb</title>
             <link rel="stylesheet" href="/qdb.bundle.css"/>
+            <script src="https://use.fontawesome.com/8c6513badd.js"></script>
         </head>
         <body>
             <section id="inferno-host">${initial_dom}</section>
@@ -38,4 +39,4 @@ function renderBasePage(initial_dom) {
         </html>`;
 }
 
-app.listen(8000);
+app.listen(8000, "localhost");

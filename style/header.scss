@@ -1,0 +1,17 @@
+@import 'colors.scss';
+
+.qdb-header {
+    text-align: center;
+    margin-top: 74px;
+    
+    .qdb-header-name {
+        color: $theme-foreground-dark;
+        font-weight: bold;
+        font-size: 2em;
+    }
+    
+    .qdb-header-slogan {
+        color: $theme-foreground-light;
+        font-size: 1em;
+    }
+}

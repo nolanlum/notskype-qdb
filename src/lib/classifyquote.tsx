@@ -13,15 +13,46 @@ export interface Quote {
 
 /*
 [9:06 PM] Wheatless: wow gj gabe
-[9:06 PM] PJ: [tiff snaps into the sunset
+[9:06 PM] PJ: [tiff snaps into the sunset]
+[2:03 PM] adjective: TASD
+SADA
+AS
+DAS
+DASD
 */
-const discordRegex = /(^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)$\n*)+/m;
+const discordHeaderRegex =
+    /^\[\d{1,2}:\d{2} [AP]M\] ([^:]*?[^\s]): (.+?)(\r\n|\n|$)/;
+
+/*
+xxKanade - Yesterday at 9:15 PM
+:o
+is that yours
+doom you lose - Yesterday at 9:15 PM
+friend's
+gabriel - Yesterday at 9:15 PM
+DOGE
+
+
+Jay Tau - 04/26/2017
+!aku reload
+!aku liberal media
+!aku sax
+*/
+const windowsDiscordHeaderRegex =
+    /^(.*) - ((.* at \d{1,2}:\d{2} [AP]M)|(\d{2}\/\d{2}\/\d{4}))(\r\n|\n)/;
+
+function windowsDiscordExtractor(match) {
+    return {
+        speaker: match[1],
+        body: "",
+    };
+}
 
 /*
 <tttb> Why did the programmer quit his job?
 <tttb> because he didn't get arrays
 */
-const ircRegex = /(^<([^\s]+)> (.+?)$\n?)+/m;
+const ircRegex = /(^<([^\s]+)> (.+?)$(\n|\r\n)?)+/m;
 
 /*
 Tiffany [5:15 PM]
@@ -39,7 +70,10 @@ melanie
 [5:23 PM]
 I just got home, so I'm gonna read them now!
 */
-const slackHeaderRegex = /^(.+?[^\s])( |$\n?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+const slackVerboseHeaderRegex = /^(.+?[^\s])( ?(\r\n|\n)?)\[\d{1,2}:\d{2} (A|P)M\](\s+)?/;
+
+// Ignore timestamps in slack logs
+const slackIgnoreRegex = /^\s*\[\d{1,2}:\d{2}( (A|P)M)?\]\s*/;
 
 function parseLog(regex, extractor, rawQuote) {
     let log = [];
@@ -64,10 +98,10 @@ function parseLog(regex, extractor, rawQuote) {
     return log;
 }
 
-function parseSlackLog(rawQuote) {
+function parseMultilineLog(lineRegex, extractor, rawQuote, ignore?) {
     let log = [];
     let currentAuthor = undefined;
-    let currentMessage = "";
+    let currentMessage = [];
     let i = 0;
     while (rawQuote !== "") {
         if (i++ > 1000) {
@@ -75,35 +109,49 @@ function parseSlackLog(rawQuote) {
             throw Error("log parsing exceeded 1000 loops");
         }
 
-        let match = rawQuote.match(slackHeaderRegex);
+        if (ignore) {
+            let ignoreMatch = rawQuote.match(ignore);
+            if (ignoreMatch) {
+                let lineStart = rawQuote.indexOf("\n");
+                rawQuote = rawQuote.substring(lineStart + 1);
+                continue;
+            }
+        }
+
+        let match = rawQuote.match(lineRegex);
         if (match) {
             if (currentAuthor !== undefined) {
                 log.push({
                     speaker: currentAuthor,
-                    body: currentMessage.trim(),
+                    body: currentMessage.join("\n").trim(),
                 });
             }
-            currentMessage = "";
-            currentAuthor = match[1];
+            let msg = extractor(match);
+            currentMessage = [msg.body];
+            currentAuthor = msg.speaker;
             rawQuote = rawQuote.substring(match[0].length);
-        }
-
-        else {
-            let lineStart = rawQuote.indexOf("\n");
-            if (lineStart === -1 ) {
-                lineStart = rawQuote.length;
+        } else {
+            let lineStart = rawQuote.indexOf("\r\n");
+            if (lineStart !== -1) {
+                currentMessage.push(rawQuote.substring(0, lineStart));
+                rawQuote = rawQuote.substring(lineStart + 2);
             } else {
-                lineStart ++;
+                lineStart = rawQuote.indexOf("\n");
+                if (lineStart === -1 ) {
+                    currentMessage.push(rawQuote);
+                    rawQuote = "";
+                } else {
+                    currentMessage.push(rawQuote.substring(0, lineStart));
+                    rawQuote = rawQuote.substring(lineStart + 1);
+                }
             }
-            currentMessage += rawQuote.substring(0, lineStart);
-            rawQuote = rawQuote.substring(lineStart);
         }
     }
 
     if (currentAuthor !== undefined) {
         log.push({
             speaker: currentAuthor,
-            body: currentMessage.trim(),
+            body: currentMessage.join("\n").trim(),
         });
     }
 
@@ -112,8 +160,8 @@ function parseSlackLog(rawQuote) {
 
 function discordExtractor(match) {
     return {
-        speaker: match[2],
-        body: match[3]
+        speaker: match[1],
+        body: match[2]
     };
 }
 
@@ -126,20 +174,27 @@ function ircExtractor(match) {
 }
 
 function slackExtractor(match) {
-    console.log(match);
     return {
-        speaker: match[2],
-        body: match[7]
+        speaker: match[1],
+        body: ""
     };
 }
 
 function classifyQuote(rawPaste : string) : Quote {
     let match;
-    match = rawPaste.match(discordRegex);
-    if (match && match[0] === rawPaste) {
+    match = rawPaste.match(discordHeaderRegex);
+    if (match) {
         return {
             type: "discord",
-            messages: parseLog(discordRegex, discordExtractor, rawPaste),
+            messages: parseMultilineLog(discordHeaderRegex, discordExtractor, rawPaste),
+        };
+    }
+
+    match = rawPaste.match(windowsDiscordHeaderRegex);
+    if (match) {
+        return {
+            type: "discord",
+            messages: parseMultilineLog(windowsDiscordHeaderRegex, windowsDiscordExtractor, rawPaste),
         };
     }
 
@@ -151,11 +206,11 @@ function classifyQuote(rawPaste : string) : Quote {
         };
     }
 
-    match = rawPaste.match(slackHeaderRegex);
+    match = rawPaste.match(slackVerboseHeaderRegex);
     if (match) {
         return {
             type: "slack",
-            messages: parseSlackLog(rawPaste)
+            messages: parseMultilineLog(slackVerboseHeaderRegex, slackExtractor, rawPaste, slackIgnoreRegex)
         };
     } else if (match) {
         console.log("rejected partial match", match);

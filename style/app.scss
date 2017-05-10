@@ -11,14 +11,14 @@ html, body {
     height: 100%;
     margin: 0;
 
-    background-color: $theme-background-dark;
+    background-color: $theme-background-light;
     background-position: fixed;
     background-size: cover;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Overpass+Mono');
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
 html, input, pre {
-    font-family: 'Overpass Mono', monospace;
+    font-family: Lato, monospace;
 }
 

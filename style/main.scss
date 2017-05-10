@@ -1,29 +1,32 @@
 @import "colors.scss";
 
 .main-container {
+    background-color: $theme-background-light;
+    background-position: fixed;
+    background-size: cover;
     
     .load-more {
         width: 100%;
-        max-width: 1000px;
+        max-width: 400px;
         margin: 40px;
         height: 40px;
-        background-color: $theme-background-light;
-        color: $theme-background-dark;
-        border-style: solid;
-        border-color: $theme-background-dark;
+        background-color: $theme-foreground-light;
+        color: $theme-background-light;
+        border-style: none;
+        cursor: pointer;
     }
+}
 
-    .quote-container {
 
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        align-items: middle;
-        justify-content: center;
+.quote-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: middle;
+    justify-content: center;
 
-        padding: 2 * $gu;
-        max-width: 1600px;
-        margin: 0 auto 0 auto;
-    }
+    padding: 2 * $gu;
+    max-width: 800px;
+    margin: 0 auto 0 auto;
 }
