@@ -1,4 +1,5 @@
 import Component from "inferno-component";
+import {Link} from "inferno-router";
 import * as moment from "moment";
 
 import classifyQuote from "../lib/classifyquote";
@@ -75,12 +76,25 @@ const Quote = ({id, author, body, addedAt}) => {
         bodyElements.push(body);
     }
 
+    let addedAtMoment = moment(new Date(addedAt));
+    let addedAtRelative =
+        addedAtMoment.isSame(null, "day") ?
+        addedAtMoment.fromNow() :
+        addedAtMoment.isSame(null, "year") ?
+        addedAtMoment.calendar(null, {sameElse: "MMM D [at] LT"}) :
+        addedAtMoment.calendar(null, {sameElse: "MMMM D, YYYY [at] LT"});
+
     return (
         <article class="quote">
             <section class="quote-body">
                 <p class="quote-text">{bodyElements}</p>
             </section>
-            <aside class="quote-timestamp">added by {author} {moment(new Date(addedAt)).fromNow()}</aside>
+            <aside class="quote-timestamp">
+                added by {author}
+                <span title={addedAtMoment.format("dddd, MMMM D, YYYY [at] LT")}>
+                    <Link to={`/quote/${id}`}> {addedAtRelative} </Link>
+                </span>
+            </aside>
         </article>
     );
 };

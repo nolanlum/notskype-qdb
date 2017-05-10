@@ -22,7 +22,7 @@ $ratio: 2.8284271247 / 2;
             border-color: $irc-color;
         }
     }
-    
+
     &.unrecognized {
         .quote-body {
             border-color: $unrecognized-color;
@@ -55,6 +55,11 @@ $ratio: 2.8284271247 / 2;
         text-align: right;
         color: $theme-foreground-extra-light;
         padding: 5px;
+
+        a {
+            text-decoration: none;
+            color: $theme-foreground-light;
+        }
     }
 
     .quote-text {
@@ -62,7 +67,6 @@ $ratio: 2.8284271247 / 2;
         margin-bottom: $gu;
         background-color: $theme-background-light;
     }
-
 }
 
 .quote-segment {

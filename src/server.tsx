@@ -8,7 +8,7 @@ import routes from "./routes";
 
 let app = express();
 app.use("/api", proxy({
-    target: "http://localhost:8080",
+    target: "http://qdb.esports.moe",
     logLevel: "debug"
 }));
 
