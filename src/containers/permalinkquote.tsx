@@ -1,47 +1,46 @@
 import Component from "inferno-component";
-
 import Quote from "../components/quote";
 import * as api from "../api/api";
 
 interface PermalinkQuoteProps {
     params : {
-        id : number,
+        id : string;
     };
 }
 
 interface PermalinkQuoteState {
-    quote : api.Quote | null;
+    quote : api.Quote;
 }
 
 class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState> {
 
     private api_handle : api.QuoteApi;
 
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.api_handle = new api.QuoteApi();
         this.state = {
-            quote: null
+            // will be undefined if not present in global context
+            quote: context.quotes[props.params.id],
         };
 
-        this.updateQuotes(props.params.id);
+        // this.updateQuotes(props.params.id || 0);
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
         this.setState({
             quote: null
         });
-        this.updateQuotes(nextProps.params.id);
+        this.updateQuotes(nextProps.params.id );
     }
 
     updateQuotes(id) {
         if (id) {
-            this.api_handle.qdbQuoteGetById({
-                    "quoteId": id
-                })
-                .then((quote) => this.setState({quote}))
-                .catch((e) => console.error(e));
+            console.log(this.context);
+            this.context.getQuote(id)
+                .then((quote) => {
+                    this.setState({quote: quote});
+                });
         }
     }
 
@@ -51,9 +50,9 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
             return <section class="quote-container">
                     <Quote
                         id={ quote.id }
-                        author={ quote.author }
-                        body={ quote.body }
-                        addedAt={ quote.addedAt }
+                        author={quote.author}
+                        body={quote.body}
+                        addedAt={quote.addedAt}
                         />
                 </section>
    ;     } else {
