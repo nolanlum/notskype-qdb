@@ -23,8 +23,6 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
             // will be undefined if not present in global context
             quote: context.quotes[props.params.id],
         };
-
-        // this.updateQuotes(props.params.id || 0);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -36,7 +34,6 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
 
     updateQuotes(id) {
         if (id) {
-            console.log(this.context);
             this.context.getQuote(id)
                 .then((quote) => {
                     this.setState({quote: quote});
