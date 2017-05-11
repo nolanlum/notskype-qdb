@@ -55,5 +55,5 @@ module.exports = {
         // new CopyWebpackPlugin([
         //     { from: "static" } // Copy contents of /static to /dist/client/
         // ])
-    ]
+    ],
 }

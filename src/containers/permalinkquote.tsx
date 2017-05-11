@@ -15,7 +15,7 @@ interface PermalinkQuoteState {
 
 class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState> {
 
-    private api_handle : api.QuoteApi;
+    protected api_handle : api.QuoteApi;
 
     constructor(props) {
         super(props);
@@ -23,16 +23,10 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
         this.state = {
             quote: null
         };
-
-        this.updateQuotes(props.params.id);
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        this.setState({
-            quote: null
-        });
-        this.updateQuotes(nextProps.params.id);
+    componentDidMount() {
+        this.updateQuotes(this.props.params.id);
     }
 
     updateQuotes(id) {
@@ -56,12 +50,9 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
                         addedAt={ quote.addedAt }
                         />
                 </section>
-   ;     } else {
-            return <section>
-                <h2>loading quote..</h2>
-            </section>
-   ;     }
-
+    ;   } else {
+            return null;
+        }
     }
 }
 

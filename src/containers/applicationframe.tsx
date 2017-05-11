@@ -29,8 +29,12 @@ class ApplicationFrame extends Component<{}, {}> {
     }
 
     __onSearch(query : string) {
-        let escapedQuery = encodeURIComponent(query);
-        this.router.push(`/search/${escapedQuery}`);
+        if (query.length === 0) {
+            this.router.push("/");
+        } else {
+            let escapedQuery = encodeURIComponent(query);
+            this.router.push(`/search/${escapedQuery}`);
+        }
     }
 
     __onSubmit(quote : ClassifiedQuote) {
