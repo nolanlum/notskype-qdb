@@ -1,4 +1,5 @@
 import Component from "inferno-component";
+import { IndexLink } from "inferno-router";
 
 import Quote from "../components/quote";
 import SearchBar from "../components/searchbar";
@@ -10,7 +11,6 @@ require("../../style/errorpage.scss");
 
 interface ErrorPageProps {
     errorCode : string;
-    errorMessage : string;
 }
 
 export default class ErrorPage extends Component<ErrorPageProps, {}> {
@@ -19,9 +19,19 @@ export default class ErrorPage extends Component<ErrorPageProps, {}> {
             <div class={ "error-page" }>
                 <h1 class="error-code">{this.props.errorCode}</h1>
                 <p class="error-message">
-                    {this.props.errorMessage}
+                    {this.props.children}
                 </p>
             </div>
         );
     }
 }
+
+export const ErrorPage404 = () =>
+    <ErrorPage
+        errorCode={404}
+        >
+        <p>
+            Page not found! Head <IndexLink>home</IndexLink>?
+        </p>
+    </ErrorPage>
+    ;
