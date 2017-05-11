@@ -13,7 +13,5 @@ export default <Route component={ ApplicationFrame }>
                     <Route path="/quote/:id" component={ PermalinkQuote } />
                     <Route path="/rand" component={ RandomQuote } />
                     <Route path="/search/:query" component={ Search } />
-                    <Route path="*"
-                           component={ ErrorPage404 }
-                           />
+                    <Route path="*" component={ ErrorPage404 } />
                 </Route>;
