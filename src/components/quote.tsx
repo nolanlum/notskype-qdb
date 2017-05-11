@@ -7,7 +7,7 @@ import classifyQuote from "../lib/classifyquote";
 require("../../style/quote.scss");
 
 const lineRegex = /<([^>]+)> (.+)/;
-const multilineRegex = /(^<([^>]+)> (.+)$(?:\r\n|\n)?)+/m;
+const multilineRegex = /(^<([^>]+)> (.*)$(?:\r\n|\n)?)+/m;
 
 interface Line {
     speaker : string;
@@ -73,7 +73,11 @@ const Quote = ({id, author, body, addedAt}) => {
     } else {
         // if the message is not formatted as IRC (not recognized on submit)
         // render the text as raw
-        bodyElements.push(body);
+        let lines = body.split("\n");
+        for (let line of lines) {
+            bodyElements.push(line);
+            bodyElements.push(<br/>);
+        }
     }
 
     let addedAtMoment = moment(new Date(addedAt));

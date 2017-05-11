@@ -51,6 +51,7 @@ $ratio: 2.8284271247 / 2;
     }
 
     .quote-timestamp {
+        display: block;
         font-style: italic;
         text-align: right;
         color: $theme-foreground-extra-light;
