@@ -1,6 +1,6 @@
 import Component from "inferno-component";
 import {Link} from "inferno-router";
-import * as moment from "moment";
+import fecha from "fecha";
 
 import classifyQuote from "../lib/classifyquote";
 
@@ -80,13 +80,19 @@ const Quote = ({id, author, body, addedAt}) => {
         }
     }
 
-    let addedAtMoment = moment(new Date(addedAt));
+    let addedAtDate = new Date(addedAt);
+    let now = new Date();
     let addedAtRelative =
-        addedAtMoment.isSame(null, "day") ?
-        addedAtMoment.fromNow() :
-        addedAtMoment.isSame(null, "year") ?
-        addedAtMoment.calendar(null, {sameElse: "MMM D [at] LT"}) :
-        addedAtMoment.calendar(null, {sameElse: "MMMM D, YYYY [at] LT"});
+        (addedAtDate.getUTCDay() === now.getUTCDay()) ?
+        fecha.format(addedAtDate, "[Today at] hh:mm A") :
+        (addedAtDate.getUTCDay() === now.getUTCDay() - 1) ?
+        fecha.format(addedAtDate, "[Yesterday at] hh:mm A") :
+        (addedAtDate.getUTCFullYear() === now.getUTCFullYear()) ?
+        fecha.format(addedAtDate, "MMMM Do [at] HH:mm A") :
+        fecha.format(addedAtDate, "MMMM Do[,] YYYY [at] hh:mm A");
+
+    let addedAtReal =
+        fecha.format(addedAtDate, "MMMM Do[,] YYYY [at] hh:mm A");
 
     return (
         <article class="quote">
@@ -95,7 +101,7 @@ const Quote = ({id, author, body, addedAt}) => {
             </section>
             <aside class="quote-timestamp">
                 added by {author}
-                <span title={addedAtMoment.format("dddd, MMMM D, YYYY [at] LT")}>
+                <span title={addedAtReal}>
                     <Link to={`/quote/${id}`}> {addedAtRelative} </Link>
                 </span>
             </aside>
