@@ -2,7 +2,7 @@ import Component from "inferno-component";
 import * as api from "../api/api";
 
 interface StateState {
-    quotes : {[key : string] : string};
+    quotes : {[id : number] : api.Quote};
 }
 
 interface StateProps {
@@ -23,25 +23,25 @@ class State extends Component<StateProps, StateState> {
             quotes: this.state.quotes,
             addQuote: this.addQuotes.bind(this),
             getQuote: this.getQuote.bind(this),
+            randQuote: this.randQuote.bind(this),
         };
     }
 
-    getQuote(quoteId : string) {
+    getQuote(quoteId : number) {
         return new Promise((resolve, reject) => {
             let existingQuote = this.state.quotes[quoteId];
-            console.log("ahh", this.state, quoteId, existingQuote);
             if (existingQuote !== undefined) {
                 resolve(existingQuote);
             } else {
-                console.log("fetching quote", quoteId);
                 this.api_handle.qdbQuoteGetById({
-                        quoteId: parseInt(quoteId)
+                        quoteId: quoteId
                     })
                     .then((quote) => {
                         this.setState({
                             quotes: {
-                                [quoteId]: quote
-                            }
+                                ...this.state.quotes,
+                                [quoteId]: quote,
+                            },
                         });
                         resolve(quote);
                     })
@@ -53,9 +53,31 @@ class State extends Component<StateProps, StateState> {
         });
     }
 
-    addQuotes(quotes) {
+    randQuote() {
+        return new Promise((resolve, reject) => {
+            this.api_handle.qdbQuoteRand()
+                .then((quote) => {
+                    this.setState({
+                        quotes: {
+                            ...this.state.quotes,
+                            [quote.id]: quote,
+                        },
+                    });
+                    resolve(quote);
+                })
+                .catch((e) => {
+                    console.error(e);
+                    reject(e);
+                });
+        });
+    }
+
+    addQuotes(quotes : api.Quote[]) {
+        let additionalQuotes = {};
+        quotes.forEach((quote) => additionalQuotes[quote.id] = quote);
+
         this.setState({
-            quotes: Object.assign(this.state.quotes, quotes),
+            quotes: Object.assign(this.state.quotes, additionalQuotes),
         });
     }
 

@@ -1,4 +1,5 @@
 import Component from "inferno-component";
+import {IndexLink, Link} from "inferno-router";
 
 import Quote from "../components/quote";
 import SearchBar from "../components/searchbar";
@@ -44,8 +45,8 @@ export default class Nav extends Component<NavProps, NavState> {
             <section class={ "nav-wrapper" }>
                 <nav class={ "nav-container" }>
                     <ul class={ "nav-links" }>
-                        <li class={ "nav-link-item" }><a href="/">Home</a></li>
-                        <li class={ "nav-link-item" }><a href="/rand">Random</a></li>
+                        <li class={ "nav-link-item" }><IndexLink>Home</IndexLink></li>
+                        <li class={ "nav-link-item" }><Link to="/rand">Random</Link></li>
                         <li class={ "nav-link-item" }><a href="#" onClick={ this.__onAddQuote.bind(this) }>Add Quote</a></li>
                     </ul>
                     <SearchBar onSearch={ this.props.onSearch.bind(this) } />

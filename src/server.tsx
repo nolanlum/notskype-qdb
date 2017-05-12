@@ -7,16 +7,16 @@ import * as isomorphicFetch from "isomorphic-fetch";
 
 import {RouterContext, match} from "inferno-router";
 import routes from "./routes";
-import * as api from "../api/api";
+import * as api from "./api/api";
 
 import sourcemap from "source-map-support";
 sourcemap.install();
 
 let app = express();
 console.log("initializing api handle..");
-let api_handle = new api.QuoteApi(isomorphicFetch, "http://localhost:8080/api/v1");
+let api_handle = new api.QuoteApi(isomorphicFetch, "http://qdb.esports.moe/api/v1");
 app.use("/api", proxy({
-    target: "http://localhost:8080",
+    target: "http://qdb.esports.moe/",
     logLevel: "debug"
 }));
 
@@ -34,14 +34,23 @@ app.use(function(req : PopulatedRequest, res, next) {
 });
 app.use("/quote/:id", function(req : PopulatedRequest, res, next) {
     console.log("populating state", api_handle.basePath);
-    api_handle.qdbQuoteGetById(
-        { quoteId: req.params.id, },
-        )
+    api_handle.qdbQuoteGetById({ quoteId: req.params.id, })
         .then((quote) => {
             // fetch the quote on the server
-            Object.assign(req.initialState.quotes, {
-                [req.params.id]: quote,
-            });
+            req.initialState.quotes = {[quote.id]: quote};
+            next();
+        })
+        .catch((e) => {
+            console.log("state population failed!", e);
+            next();
+        });
+});
+app.use("/rand", function(req : PopulatedRequest, res, next) {
+    console.log("populating state", api_handle.basePath);
+    api_handle.qdbQuoteRand()
+        .then((quote) => {
+            // fetch the quote on the server
+            req.initialState.quotes = {[quote.id]: quote};
             next();
         })
         .catch((e) => {

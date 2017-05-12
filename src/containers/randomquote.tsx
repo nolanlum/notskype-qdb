@@ -11,10 +11,22 @@ interface RandomQuoteState {
 
 class RandomQuote extends PermalinkQuote {
 
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            // will be undefined if not present in global context
+            quote: context.quotes[Object.keys(context.quotes).shift()],
+        };
+    }
+
     componentDidMount() {
-        this.api_handle.qdbQuoteRand()
-            .then((quote) => this.setState({quote}))
-            .catch((e) => console.error(e));
+        if (this.state && this.state.quote === undefined) {
+            this.updateRandQuote();
+        }
+    }
+
+    updateRandQuote() {
+        this.context.randQuote().then((quote) => this.setState({quote: quote}));
     }
 
 }

@@ -295,7 +295,7 @@ export const QuoteApiFp = {
     /**
      * Get a random quote
      */
-    qdbQuoteRand(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<InlineResponse200>> {
+    qdbQuoteRand(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<InlineResponse200> {
         const fetchArgs = QuoteApiFetchParamCreator.qdbQuoteRand(options);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
