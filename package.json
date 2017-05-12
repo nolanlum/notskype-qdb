@@ -50,11 +50,9 @@
   },
   "dependencies": {
     "@types/express": "^4.0.35",
-    "cldr": "^4.3.0",
     "core-js": "^2.4.1",
     "express": "^4.15.2",
     "fecha": "^2.3.1",
-    "globalize": "^1.2.3",
     "history": "^4.6.1",
     "http-proxy-middleware": "^0.17.4",
     "inferno": "^3.1.0",

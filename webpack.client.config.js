@@ -3,7 +3,6 @@ var path = require('path')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 
-
 module.exports = {
     entry: {
         qdb: './src/app'
@@ -53,7 +52,6 @@ module.exports = {
             filename: 'qdb.bundle.css',
             allChunks: true
         }),
-        // new UglifyJSPlugin(),
         // new CopyWebpackPlugin([
         //     { from: "static" } // Copy contents of /static to /dist/client/
         // ])
