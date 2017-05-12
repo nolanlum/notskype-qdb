@@ -23,16 +23,10 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
         this.state = {
             quotes: null
         };
-
-        this.updateQuote(props.params.query);
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        this.setState({
-            quote: null
-        });
-        this.updateQuote(nextProps.params.query);
+    componentDidMount() {
+        this.updateQuote(this.props.params.query);
     }
 
     updateQuote(query) {
