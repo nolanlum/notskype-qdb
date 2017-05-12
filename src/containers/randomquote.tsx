@@ -31,7 +31,6 @@ class RandomQuote extends PermalinkQuote {
         if (evt.key !== "r" && evt.code !== "r") return;
         this.refreshing = true;
 
-        this.updateRandQuote();
         this.updateRandQuote()
             .then((quote) => {
                 this.refreshing = false;
