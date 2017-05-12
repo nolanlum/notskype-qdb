@@ -19,11 +19,29 @@ export interface PasteModalState {
 }
 
 export default class PasteModal extends Component<PasteModalProps, PasteModalState> {
+
+    private listener : EventListener;
+
     constructor(props) {
         super(props);
         this.state = {
             quote : null
         };
+        this.listener = this.__onKeyPress.bind(this);
+    }
+
+    __onKeyPress(evt) {
+        if (evt.key === "Escape" || evt.code === "Escape") {
+            this.props.onDismiss();
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener("keyup", this.listener);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("keyup", this.listener);
     }
 
     render() {

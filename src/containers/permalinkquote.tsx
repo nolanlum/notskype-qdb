@@ -3,6 +3,8 @@ import Component from "inferno-component";
 import Quote from "../components/quote";
 import * as api from "../api/api";
 
+require("../../style/permalinkquote.scss");
+
 interface PermalinkQuoteProps {
     params : {
         id : number,
@@ -42,7 +44,7 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
     render() {
         if (this.state && this.state.quote) {
             let {quote} = this.state;
-            return <section class="quote-container">
+            return <section class="quote-container permalink-quote-container">
                     <Quote
                         id={ quote.id }
                         author={ quote.author }
