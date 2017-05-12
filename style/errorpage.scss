@@ -1,0 +1,15 @@
+@import './colors';
+
+.error-page {
+    padding:  2 * $gu;
+    text-align: center;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+
+    .error-code {
+        color: $theme-foreground-dark;
+        font-size: 4 * $gu;
+    }
+}

@@ -1,5 +1,4 @@
 import Component from "inferno-component";
-
 import Quote from "../components/quote";
 import * as api from "../api/api";
 
@@ -7,23 +6,21 @@ require("../../style/permalinkquote.scss");
 
 interface PermalinkQuoteProps {
     params : {
-        id : number,
+        id : string;
     };
 }
 
 interface PermalinkQuoteState {
-    quote : api.Quote | null;
+    quote : api.Quote;
 }
 
 class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState> {
 
-    protected api_handle : api.QuoteApi;
-
-    constructor(props) {
-        super(props);
-        this.api_handle = new api.QuoteApi();
+    constructor(props, context) {
+        super(props, context);
         this.state = {
-            quote: null
+            // will be undefined if not present in global context
+            quote: context.quotes[props.params.id],
         };
     }
 
@@ -33,11 +30,10 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
 
     updateQuotes(id) {
         if (id) {
-            this.api_handle.qdbQuoteGetById({
-                    "quoteId": id
-                })
-                .then((quote) => this.setState({quote}))
-                .catch((e) => console.error(e));
+            this.context.getQuote(id)
+                .then((quote) => {
+                    this.setState({quote: quote});
+                });
         }
     }
 
@@ -47,14 +43,15 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
             return <section class="quote-container permalink-quote-container">
                     <Quote
                         id={ quote.id }
-                        author={ quote.author }
-                        body={ quote.body }
-                        addedAt={ quote.addedAt }
+                        author={quote.author}
+                        body={quote.body}
+                        addedAt={quote.addedAt}
                         />
                 </section>
-    ;   } else {
+   ;     } else {
             return null;
         }
+
     }
 }
 
