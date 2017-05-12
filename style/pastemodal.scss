@@ -1,12 +1,27 @@
 .paste-modal-container {
     position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    z-index: 2;
     
     .paste-modal-overlay {
         background: rgba(10, 10, 10, 0.9);
         width: 100%;
         height: 100%;
+    }
+
+    .paste-modal {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
