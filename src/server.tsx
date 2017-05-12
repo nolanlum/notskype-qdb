@@ -14,9 +14,9 @@ sourcemap.install();
 
 let app = express();
 console.log("initializing api handle..");
-let api_handle = new api.QuoteApi(isomorphicFetch, "http://qdb.esports.moe/api/v1");
+let api_handle = new api.QuoteApi(isomorphicFetch, "http://localhost:8080/api/v1");
 app.use("/api", proxy({
-    target: "http://qdb.esports.moe/",
+    target: "http://localhost:8080/",
     logLevel: "debug"
 }));
 
