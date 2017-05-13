@@ -83,11 +83,11 @@ const Quote = ({id, author, body, addedAt}) => {
     let addedAtDate = new Date(addedAt);
     let now = new Date();
     let addedAtRelative =
-        (addedAtDate.getUTCDay() === now.getUTCDay()) ?
+        (addedAtDate.getDay() === now.getDay()) ?
         fecha.format(addedAtDate, "[Today at] hh:mm A") :
-        (addedAtDate.getUTCDay() === now.getUTCDay() - 1) ?
+        (addedAtDate.getDay() === now.getDay() - 1) ?
         fecha.format(addedAtDate, "[Yesterday at] hh:mm A") :
-        (addedAtDate.getUTCFullYear() === now.getUTCFullYear()) ?
+        (addedAtDate.getFullYear() === now.getFullYear()) ?
         fecha.format(addedAtDate, "MMMM Do [at] HH:mm A") :
         fecha.format(addedAtDate, "MMMM Do[,] YYYY [at] hh:mm A");
 
