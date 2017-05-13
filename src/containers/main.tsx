@@ -32,7 +32,19 @@ class Main extends Component<{}, MainState> {
 
         this.api_handle = new api.QuoteApi();
 
+        this.registerInfiniteScroll();
+
         this.loadMore(); // initial data fetch
+    }
+
+    registerInfiniteScroll() {
+        if ('window' in global) {
+            window.onscroll = () => {
+                if (window.scrollY + document.body.offsetHeight >= document.body.scrollHeight) {
+                    this.loadMore();
+                }
+            }
+        }
     }
 
     loadMore() {
