@@ -38,12 +38,17 @@ class Main extends Component<{}, MainState> {
     }
 
     registerInfiniteScroll() {
-        if ('window' in global) {
+        if ("window" in global) {
+            let lastTrigger = 0;
             window.onscroll = () => {
-                if (window.scrollY + document.body.offsetHeight >= document.body.scrollHeight) {
+                let now = new Date().getTime();
+                let dt = now - lastTrigger;
+                let scrollBottom = window.scrollY + document.body.offsetHeight;
+                if (dt > 500 && scrollBottom >= document.body.scrollHeight) {
+                    lastTrigger = now;
                     this.loadMore();
                 }
-            }
+            };
         }
     }
 
