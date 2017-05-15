@@ -3,4 +3,8 @@ node_js:
   - "7"
 
 install:
-  npm install && webpack --bail
+  # this is a hack to workaround `npm install` being loud af
+  # a fix is present in npm@5 https://github.com/npm/npm/pull/15914
+  # remove this once npm5 is released.
+  - npm install > ./_build.log 2>&1 || ( EC=$?; cat ./_build.log; exit $EC )
+  - webpack --bail
