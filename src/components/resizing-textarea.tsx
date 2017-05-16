@@ -1,22 +1,25 @@
-import Component from 'inferno-component';
+import Component from "inferno-component";
 
-export default class ResizingTextarea extends Component<{},{}> {
+export interface ResizingTextareaProps {
+    onInput : (evt : Event) => void;
+}
 
-    textarea : textarea;
+export default class ResizingTextarea extends Component<ResizingTextareaProps, {}> {
+
+    textarea : HTMLTextAreaElement;
 
     constructor(props) {
         super(props);
     }
 
     __setTextarea(ref) {
-        console.log(ref);
         this.textarea = ref;
     }
 
     __onInput(evt) {
-        console.log(this.textarea.scrollHeight);
         this.textarea.style.height = "auto";
         this.textarea.style.height = this.textarea.scrollHeight + "px";
+        this.props.onInput(evt);
     }
 
     componentDidMount() {
@@ -28,9 +31,10 @@ export default class ResizingTextarea extends Component<{},{}> {
     }
 
     render() {
-        return <textarea {...this.props}
-            ref={this.__setTextarea.bind(this)}
-            onInput={this.__onInput.bind(this)}
-            />
+        return(
+            <textarea {...this.props}
+                ref={this.__setTextarea.bind(this)}
+                onInput={this.__onInput.bind(this)}
+            />);
     }
 }
