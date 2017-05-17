@@ -17,21 +17,21 @@ describe("wasYesterday", function() {
     });
     
     it("should decide 4/30 came before 5/1", function() {
-        let today = new Date(2017, 5, 01);
+        let today = new Date(2017, 5, 1);
         let yesterday = new Date(2017, 4, 30);
         
         expect(wasYesterday(yesterday, todayy)).toEqual(true);
     });
     
     it("should decide 7/31 came before 8/1", function() {
-        let today = new Date(2017, 8, 01);
+        let today = new Date(2017, 8, 1);
         let yesterday = new Date(2017, 7, 31);
         
         expect(wasYesterday(yesterday, today)).toEqual(true);
     });
     
     it("should decide 8/31 came before 9/1", function() {
-        let today = new Date(2017, 9, 01);
+        let today = new Date(2017, 9, 1);
         let yesterday = new Date(2017, 8, 31);
         
         expect(wasYesterday(yesterday, today)).toEqual(true);
