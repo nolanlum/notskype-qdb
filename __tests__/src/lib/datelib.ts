@@ -1,6 +1,6 @@
 import {wasYesterday} from "lib/datelib";
 
-const newHumanDate = (year, month, day) => newHumanDate(year, month - 1, day);
+const newHumanDate = (year, month, day) => new Date(year, month - 1, day);
 
 
 describe("wasYesterday", function() {
