@@ -5,7 +5,7 @@ export function wasYesterday(date : Date, now : Date) : boolean {
     if (isLeapYear) {
         daysInMonth[1] = 29;
     }
-    
+
     if (now.getDate() === 1) {
         if (now.getMonth() === 0) {
             return (date.getMonth() === 11) && (date.getDate() === 31);
