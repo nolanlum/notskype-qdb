@@ -1,5 +1,6 @@
 import Component from "inferno-component";
 import classifyQuote, {Quote} from "../lib/classifyquote";
+import ResizingTextarea from "./resizing-textarea";
 
 require("../../style/pasteinput.scss");
 
@@ -45,7 +46,7 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
 
         return(
             <section class={"paste-box " + quoteClass}>
-                <textarea
+                <ResizingTextarea
                     class="paste-box-input"
                     type="text"
                     name="quote"

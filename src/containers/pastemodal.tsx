@@ -31,9 +31,7 @@ export default class PasteModal extends Component<PasteModalProps, PasteModalSta
             this.props.visible ?
                 <div class={ "paste-modal-container" }>
                     <div onClick={ this.props.onDismiss.bind(this) } class={ "paste-modal-overlay" }></div>
-                    <div class={ "paste-modal" }>
-                        <PasteInput onSubmit={ this.props.onSubmit.bind(this) } />
-                    </div>
+                    <PasteInput onSubmit={ this.props.onSubmit.bind(this) } />
                 </div>
                 : null
         );
