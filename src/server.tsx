@@ -71,12 +71,15 @@ app.use(function ssr(req : PopulatedRequest, res : express.Response) {
 });
 
 function renderBasePage(initial_dom, initial_state) {
+    declare var __ASSET_URI_BASE__: string;
+    let asset_base = __ASSET_URI_BASE__;
+    
     return `
         <!DOCTYPE html>
         <html>
         <head>
             <title>qdb</title>
-            <link rel="stylesheet" href="/qdb.bundle.css"/>
+            <link rel="stylesheet" href="${asset_base}/qdb.bundle.css"/>
             <script src="https://use.fontawesome.com/8c6513badd.js"></script>
             <script>
                 window.__initialState=${JSON.stringify(initial_state)};
@@ -84,7 +87,7 @@ function renderBasePage(initial_dom, initial_state) {
         </head>
         <body>
             <section id="inferno-host">${initial_dom}</section>
-            <script src="/qdb.bundle.js"></script>
+            <script src="${asset_base}/qdb.bundle.js"></script>
         </body>
         </html>`;
 }
