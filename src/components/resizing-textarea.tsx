@@ -18,7 +18,7 @@ export default class ResizingTextarea extends Component<ResizingTextareaProps, {
 
     __onInput(evt) {
         this.textarea.style.height = "auto";
-        this.textarea.style.height = this.textarea.scrollHeight + "px";
+        this.textarea.style.height = (this.textarea.scrollHeight + 5) + "px";
         this.props.onInput(evt);
     }
 
