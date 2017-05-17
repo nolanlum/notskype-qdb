@@ -46,5 +46,4 @@ module.exports = {
             __ASSET_URI_BASE__: node.env.TRAVIS === "true" ? JSON.stringify("https://d3k4bbaes758re.cloudfront.net") : JSON.stringify(""),
         }),
     ],
-],
 }
