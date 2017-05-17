@@ -22,7 +22,7 @@ describe("wasYesterday", function() {
         let today = newHumanDate(2017, 5, 1);
         let yesterday = newHumanDate(2017, 4, 30);
         
-        expect(wasYesterday(yesterday, todayy)).toEqual(true);
+        expect(wasYesterday(yesterday, today)).toEqual(true);
     });
     
     it("should decide 7/31 came before 8/1", function() {
