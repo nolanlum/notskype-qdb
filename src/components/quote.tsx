@@ -84,15 +84,15 @@ const Quote = ({id, author, body, addedAt}) => {
     let now = new Date();
     let addedAtRelative =
         (addedAtDate.getDay() === now.getDay()) ?
-        fecha.format(addedAtDate, "[Today at] hh:mm A") :
+        fecha.format(addedAtDate, "[Today at] h:mma") :
         (addedAtDate.getDay() === now.getDay() - 1) ?
-        fecha.format(addedAtDate, "[Yesterday at] hh:mm A") :
+        fecha.format(addedAtDate, "[Yesterday at] h:mma") :
         (addedAtDate.getFullYear() === now.getFullYear()) ?
-        fecha.format(addedAtDate, "MMMM Do [at] HH:mm A") :
-        fecha.format(addedAtDate, "MMMM Do[,] YYYY [at] hh:mm A");
+        fecha.format(addedAtDate, "MMMM D [at] h:mma") :
+        fecha.format(addedAtDate, "MMMM D, YYYY [at] h:mma");
 
     let addedAtReal =
-        fecha.format(addedAtDate, "MMMM Do[,] YYYY [at] hh:mm A");
+        fecha.format(addedAtDate, "dddd, MMMM D, YYYY [at] h:mma");
 
     return (
         <article class="quote">
