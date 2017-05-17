@@ -43,7 +43,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            __ASSET_URI_BASE__: node.env.TRAVIS === "true" ? JSON.stringify("https://d3k4bbaes758re.cloudfront.net") : JSON.stringify(""),
+            __ASSET_URI_BASE__: process.env.TRAVIS === "true" ? JSON.stringify("https://d3k4bbaes758re.cloudfront.net") : JSON.stringify(""),
         }),
     ],
 }
