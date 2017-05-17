@@ -12,6 +12,8 @@ import * as api from "./api/api";
 import sourcemap from "source-map-support";
 sourcemap.install();
 
+declare var __ASSET_URI_BASE__ : string;
+
 let app = express();
 console.log("initializing api handle..");
 let api_handle = new api.QuoteApi(isomorphicFetch, "http://localhost:8080/api/v1");
@@ -71,9 +73,8 @@ app.use(function ssr(req : PopulatedRequest, res : express.Response) {
 });
 
 function renderBasePage(initial_dom, initial_state) {
-    declare var __ASSET_URI_BASE__: string;
     let asset_base = __ASSET_URI_BASE__;
-    
+
     return `
         <!DOCTYPE html>
         <html>
