@@ -73,5 +73,19 @@ describe("wasYesterday", function() {
         
         expect(wasYesterday(yesterday, today)).toEqual(true);
     });
+    
+    it("should decide 12/31/2016 came before 1/1/2017", function() {
+        let today = newHumanDate(2017, 1, 1);
+        let yesterday = newHumanDate(2016, 12, 31);
+        
+        expect(wasYesterday(yesterday, today)).toEqual(true);
+    });
+    
+    it("should decide 8/21/2016 did not come before 8/22/2017", function() {
+        let today = newHumanDate(2017, 8, 22);
+        let notYesterday = newHumanDate(2016, 8, 21);
+        
+        expect(wasYesterday(notYesterday, today)).toEqual(false);
+    });
 
 });
