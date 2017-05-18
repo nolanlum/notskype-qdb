@@ -7,7 +7,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     max-height: 50%;
-    width: 600px;
+    width: 50%;
+    min-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,7 +20,7 @@
 
     &.discord {
         .paste-box-input {
-            outline-color: $discord-color;
+            border-color: $discord-color;
         }
 
         .paste-box-name {
@@ -29,7 +30,7 @@
 
     &.slack {
         .paste-box-input {
-            outline-color: $slack-color;
+            border-color: $slack-color;
         }
 
         .paste-box-name {
@@ -39,17 +40,17 @@
 
     &.irc {
         .paste-box-input {
-            outline-color: $irc-color;
+            border-color: $irc-color;
         }
 
         .paste-box-name {
             color: $irc-color;
         }
     }
-    
+
     &.unrecognized {
         .paste-box-input {
-            outline-color: $unrecognized-color;
+            border-color: $unrecognized-color;
         }
 
         .paste-box-name {
@@ -57,14 +58,44 @@
         }
     }
 
+    .paste-and-preview {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .paste-box-input-wrapper, .paste-box-preview-wrapper  {
+        width: 48%;
+        background-color: $theme-background-light;
+        padding: 20px;
+    }
+
+    .paste-box-input-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .paste-box-preview-wrapper {
+        overflow-y: scroll;
+
+        .quote {
+            margin: 0;
+            box-shadow: none;
+        }
+    }
+
     .paste-box-input {
-        outline: 5px solid transparent;
+        width: 100%;
+        border: 5px solid;
+        outline: none;
         padding: $gu;
-        width: 600px;
         overflow: auto;
         max-height: 100%;
+        resize: vertical;
     }
-    
+
     .paste-submit {
         flex-shrink: 0;
         width: 100%;
@@ -74,6 +105,17 @@
         color: $theme-foreground-dark;
         border-style: solid;
         border-color: $theme-border-light;
+        transition:
+            background-color 0.2s ease-in-out,
+            color 0.2s ease-in-out,
+            border-color 0.2s ease-in-out;
+    }
+
+    .paste-submit:enabled:hover {
+        background-color: $theme-foreground-light;
+        color: $theme-background-light;
+        border-color: $theme-foreground-light;
+        cursor: pointer;
     }
 
 }
