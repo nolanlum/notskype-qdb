@@ -3,6 +3,7 @@ import {Link} from "inferno-router";
 import fecha from "fecha";
 
 import classifyQuote from "../lib/classifyquote";
+import {wasYesterday} from "../lib/datelib";
 
 require("../../style/quote.scss");
 
@@ -83,9 +84,9 @@ const Quote = ({id, author, body, addedAt}) => {
     let addedAtDate = new Date(addedAt);
     let now = new Date();
     let addedAtRelative =
-        (addedAtDate.getDay() === now.getDay()) ?
+        (addedAtDate.getDate() === now.getDate()) ?
         fecha.format(addedAtDate, "[Today at] h:mma") :
-        (addedAtDate.getDay() === now.getDay() - 1) ?
+        wasYesterday(addedAtDate, now) ?
         fecha.format(addedAtDate, "[Yesterday at] h:mma") :
         (addedAtDate.getFullYear() === now.getFullYear()) ?
         fecha.format(addedAtDate, "MMMM D [at] h:mma") :
