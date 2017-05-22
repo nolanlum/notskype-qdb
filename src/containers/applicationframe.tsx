@@ -7,6 +7,7 @@ import SearchBar from "../components/searchbar";
 import PasteInput from "../components/pasteinput";
 
 import { Quote as ClassifiedQuote } from "../lib/classifyquote";
+import normalizeQuote from "../lib/normalizequote";
 import * as api from "../api/api";
 
 /**
@@ -43,11 +44,7 @@ class ApplicationFrame extends Component<{}, {}> {
             payload = quote.message;
         } else {
             // normalize the message as an irc-style log
-            quote.messages.map((message) => {
-                message.body.split("\n").map((line) => {
-                    payload = payload.concat(`<${message.speaker}> ${line}\n`);
-                });
-            });
+            payload = normalizeQuote(quote);
         }
         this.api_handle.qdbQuotePost({
             body: {

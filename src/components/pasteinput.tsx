@@ -1,6 +1,8 @@
 import Component from "inferno-component";
 import classifyQuote, {Quote} from "../lib/classifyquote";
+import normalizeQuote from "../lib/normalizequote";
 import ResizingTextarea from "./resizing-textarea";
+import { default as QuotePreview } from "./quote";
 
 require("../../style/pasteinput.scss");
 
@@ -46,15 +48,25 @@ export default class PasteInput extends Component<PasteInputProps, PasteInputSta
 
         return(
             <section class={"paste-box " + quoteClass}>
-                <ResizingTextarea
-                    class="paste-box-input"
-                    type="text"
-                    name="quote"
-                    placeholder="paste a quote here"
-                    onInput={ this.__onQuoteChange.bind(this) }
-                    value={ this.state.rawQuote }
-                    />
-                <aside class="paste-box-name">{ quoteClass }</aside>
+                <section class="paste-and-preview">
+                    <section class="paste-box-input-wrapper">
+                        <ResizingTextarea
+                            class="paste-box-input"
+                            type="text"
+                            name="quote"
+                            placeholder="paste a quote here"
+                            onInput={ this.__onQuoteChange.bind(this) }
+                            value={ this.state.rawQuote } />
+                        <aside class="paste-box-name">{ quoteClass }</aside>
+                    </section>
+                    <section class="paste-box-preview-wrapper">
+                        <QuotePreview
+                            id={ 0 }
+                            author={ "anonymous@esports.moe" }
+                            body={ normalizeQuote(this.state.quote) }
+                            addedAt={ new Date() } />
+                    </section>
+                </section>
                 <button
                     class="paste-submit"
                     disabled={ this.state.quote === undefined }
