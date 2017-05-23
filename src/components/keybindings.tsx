@@ -11,7 +11,7 @@ import normalizeQuote from "../lib/normalizequote";
 import * as api from "../api/api";
 
 /**
-Component for managing keybdindings on a page.
+Component for managing keybindings on a page.
 **/
 class Keybindings extends Component<{}, {}> {
 
@@ -19,7 +19,7 @@ class Keybindings extends Component<{}, {}> {
 
     constructor(props) {
         super(props);
-        this.keyListener = this. __onKeyPress.bind(this);
+        this.keyListener = this.__onKeyPress.bind(this);
     }
 
     __onKeyPress(evt) {
