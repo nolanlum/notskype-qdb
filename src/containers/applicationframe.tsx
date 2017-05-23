@@ -22,10 +22,12 @@ class ApplicationFrame extends Component<{}, {}> {
 
     private api_handle : api.QuoteApi;
     private router : any;
+    private randQuote : any;
 
-    constructor(props, {router}) {
+    constructor(props, {router, randQuote}) {
         super(props);
         this.router = router;
+        this.randQuote = randQuote;
         this.api_handle = new api.QuoteApi();
     }
 
@@ -36,6 +38,13 @@ class ApplicationFrame extends Component<{}, {}> {
             let escapedQuery = encodeURIComponent(query);
             this.router.push(`/search/${escapedQuery}`);
         }
+    }
+
+    __onRandom() {
+        this.randQuote()
+            .then(quote => {
+                this.router.push(`/quote/${quote.id}`);
+            });
     }
 
     __onSubmit(quote : ClassifiedQuote) {
@@ -60,6 +69,7 @@ class ApplicationFrame extends Component<{}, {}> {
         return (
             <section class={ "application-container" }>
                 <Nav
+                    onRandom={ this.__onRandom.bind(this) }
                     onSearch={ this.__onSearch.bind(this) }
                     onSubmit={ this.__onSubmit.bind(this) } />
                 <Header />
