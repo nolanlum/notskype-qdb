@@ -30,6 +30,9 @@ $ratio: 2.8284271247 / 2;
     }
     */
 
+    flex-grow: 0;
+    flex-shrink: 0;
+
     & {
         margin: $gu;
         width: 100%;

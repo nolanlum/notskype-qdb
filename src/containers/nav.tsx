@@ -20,6 +20,7 @@ export interface NavState {
 }
 
 export default class Nav extends Component<NavProps, NavState> {
+
     constructor(props) {
         super(props);
 
@@ -28,7 +29,8 @@ export default class Nav extends Component<NavProps, NavState> {
         };
     }
 
-    __onAddQuote() {
+    __onAddQuote(e) {
+        e.preventDefault();
         this.setState({
             showAddQuote: true
         });
@@ -40,19 +42,24 @@ export default class Nav extends Component<NavProps, NavState> {
         });
     }
 
+    __onRandom(e) {
+        e.preventDefault();
+        this.props.onRandom();
+    }
+
     render() {
         return(
             <section class={ "nav-wrapper" }>
                 <nav class={ "nav-container" }>
                     <ul class={ "nav-links" }>
                         <li class={ "nav-link-item" }><IndexLink>Home</IndexLink></li>
-                        <li class={ "nav-link-item" }><Link to="/rand">Random</Link></li>
+                        <li class={ "nav-link-item" }><a href="#" onClick={ this.__onRandom.bind(this) }>Random</a></li>
                         <li class={ "nav-link-item" }><a href="#" onClick={ this.__onAddQuote.bind(this) }>Add Quote</a></li>
                     </ul>
                     <SearchBar onSearch={ this.props.onSearch.bind(this) } />
                 </nav>
                 <PasteModal
-                    onSubmit={ this.props.onSubmit.bind(this) }
+                    onSubmit={ this.props.onSubmit }
                     onDismiss={ this.__onDismissAdd.bind(this) }
                     visible={ this.state.showAddQuote } />
             </section>

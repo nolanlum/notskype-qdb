@@ -1,7 +1,6 @@
 import Component from "inferno-component";
 
 import Quote from "../components/quote";
-import Nav from "./nav";
 import Header from "./header";
 
 import { Quote as ClassifiedQuote } from "../lib/classifyquote";

@@ -5,6 +5,7 @@ import Nav from "../containers/nav";
 import Header from "../containers/header";
 import SearchBar from "../components/searchbar";
 import PasteInput from "../components/pasteinput";
+import Keybindings from "../components/keybindings";
 
 import { Quote as ClassifiedQuote } from "../lib/classifyquote";
 import normalizeQuote from "../lib/normalizequote";
@@ -22,10 +23,13 @@ class ApplicationFrame extends Component<{}, {}> {
 
     private api_handle : api.QuoteApi;
     private router : any;
+    private randQuote : any;
+    private keyListener : EventListener;
 
-    constructor(props, {router}) {
+    constructor(props, {router, randQuote}) {
         super(props);
         this.router = router;
+        this.randQuote = randQuote;
         this.api_handle = new api.QuoteApi();
     }
 
@@ -36,6 +40,13 @@ class ApplicationFrame extends Component<{}, {}> {
             let escapedQuery = encodeURIComponent(query);
             this.router.push(`/search/${escapedQuery}`);
         }
+    }
+
+    __onRandom() {
+        this.randQuote()
+            .then(quote => {
+                this.router.push(`/quote/${quote.id}`);
+            });
     }
 
     __onSubmit(quote : ClassifiedQuote) {
@@ -58,13 +69,18 @@ class ApplicationFrame extends Component<{}, {}> {
 
     render() {
         return (
-            <section class={ "application-container" }>
-                <Nav
-                    onSearch={ this.__onSearch.bind(this) }
-                    onSubmit={ this.__onSubmit.bind(this) } />
-                <Header />
-                {this.props.children}
-            </section>
+            <Keybindings bindings={{
+                "r": this.__onRandom.bind(this)
+            }}>
+                <section class={ "application-container" }>
+                    <Nav
+                        onRandom={ this.__onRandom.bind(this) }
+                        onSearch={ this.__onSearch.bind(this) }
+                        onSubmit={ this.__onSubmit.bind(this) } />
+                    <Header />
+                    {this.props.children}
+                </section>
+            </Keybindings>
 
         );
     }
