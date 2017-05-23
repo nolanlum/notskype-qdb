@@ -19,11 +19,14 @@ interface PermalinkQuoteState {
 }
 
 class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState> {
+
     router : any;
+    loading : boolean;
 
     constructor(props, {quotes, router}) {
         super(props, {router});
         this.router = router;
+        this.loading = false;
         this.state = {
             // will be undefined if not present in global context
             quote: quotes[props.params.id],
@@ -47,18 +50,33 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
         }
     }
 
+    /** Try to prefetch the next quote. on succ, redirect to it
+     */
+    loadNextQuote() {
+        this.loading = true;
+        let nextId = this.state.quote.id + 1;
+
+        this.context.getQuote(nextId)
+            .then(
+                () => this.router.push(`/quote/${nextId}`),
+                () => {})
+            .then(() => {
+                this.loading = false;
+            });
+    }
+
     render() {
-        if (this.state && this.state.missing) {
-            console.log("missing!");
+        if (this.state.missing) {
             return <ErrorPage404/>;
         }
         if (this.state && this.state.quote) {
             let {quote} = this.state;
+            let bindings = {
+                "a": () => this.router.push(`/quote/${Math.max(1, quote.id - 1)}`),
+                "d": this.loadNextQuote.bind(this),
+            };
             return (
-                <Keybindings bindings={{
-                    "a": () => this.router.push(`/quote/${Math.max(1, quote.id - 1)}`),
-                    "d": () => this.router.push(`/quote/${quote.id + 1}`),
-                }}>
+                <Keybindings bindings={bindings}>
                     <section class="quote-container permalink-quote-container">
                         <Quote
                             id={ quote.id }
