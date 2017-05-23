@@ -3,4 +3,17 @@ node_js:
   - "7"
 
 install:
-  npm install && webpack
+  # this is a hack to workaround `npm install` being loud af
+  # a fix is present in npm@5 https://github.com/npm/npm/pull/15914
+  # remove this once npm5 is released.
+  - npm install > ./_build.log 2>&1 || ( EC=$?; cat ./_build.log; exit $EC )
+  - webpack --bail
+
+deploy:
+  provider: s3
+  access_key_id: AKIAIE5WUERIFNUSGYRQ
+  secret_access_key:
+    secure: vFmFpG0rv5RakHJB/9o7YpKCAL2L4lnXG47Tivt9ey/a9aSJVxbCzCajlWEiWP3y2V4umO/55o59WaQr81yGbCsIsWSEaTGGbfmEWaL92yZpy9PX4H8+r4MimSN5QAW4G31MZSgBg2ec9KUuZuoyGRE3yHL0AxuTWeCvpJ3SmqqURk8wDmiauZswrMUxCOwC+GEJBhv2NCCIwyOq2yBXPmB3CUCH2tGzt45QVU4UdTTlzDORiWYVh0tnzdp8pPZKup1hgH0YNdXhWJEkCNXDF/wcAbF+U6FB+bRXK9jwsK3wgLXYQwNxl4BA6hRmtOoZQcQlqjCUE6KPmTZ3GJgKkovupYnvzI5NobbnFzur+Ny/F8Pa1SJYUmk5GfwVMCzwB+Ova3LD2VpxZkTzb3XmLIdNiTxTItmBuAMEHwos/bhzb9RyYYjb7oQvltRID1W/Cr41Rgtm3Orh56bB0CzN5uy55q4kkMMYBWm8IIg+WMFF5qyGIeNnt6XiNd401sNqD6+nwOYhqN7914ntBaQ+G8Gt1hGbZtpmN/sGQqEwk9IwF/Ytd4gPGbTPDfPYyAgpVuIP8aehLkjw4oSz5Hq6Z8zjrP+doNuDFDG09jNEoM/tthBb1s+7aTpaEy8m0PIaK2MR6JenNahfSNEWQzI2I8CNWzv9Mp5yvl79AT3FZaA=
+  bucket: "notskype-qdb"
+  skip_cleanup: true
+  local_dir: dist
