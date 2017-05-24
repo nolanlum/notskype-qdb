@@ -34,6 +34,10 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
         };
     }
 
+    componentDidMount() {
+        this.updateQuotes(this.props.params.id);
+    }
+
     componentWillReceiveProps(nextProps) {
         this.updateQuotes(nextProps.params.id);
     }
