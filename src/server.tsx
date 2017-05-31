@@ -1,18 +1,17 @@
-import Main from "./containers/main";
 import * as express from "express";
 import * as proxy from "http-proxy-middleware";
-import InfernoServer from "inferno-server";
-import State from "./containers/state";
 import * as isomorphicFetch from "isomorphic-fetch";
+import sourcemap from "source-map-support";
 
-import {RouterContext, match} from "inferno-router";
-import routes from "./routes";
+import {PopulatedRequest} from "./server/populatedrequest";
+import classifyQuote from "./lib/classifyquote";
 import * as api from "./api/api";
 
-import sourcemap from "source-map-support";
-sourcemap.install();
+import {ssr} from "./server/ssr";
+import * as metadata from "./server/metadata";
+import * as state from "./server/state";
 
-declare var __ASSET_URI_BASE__ : string;
+sourcemap.install();
 
 let app = express();
 console.log("initializing api handle..");
@@ -22,75 +21,15 @@ app.use("/api", proxy({
     logLevel: "debug"
 }));
 
-// add initialState prop
-interface PopulatedRequest extends express.Request {
-    initialState : any;
-}
+app.use(state.init);
+
+// metadata pipeline
+app.use("/quote/:id", metadata.quoteId(api_handle));
+app.use("/quote/:id", state.quoteId(api_handle));
+app.get("/quote/:id", ssr);
+
+app.use("/", metadata.root(api_handle));
+app.get("/", ssr);
 
 app.use(express.static("dist"));
-app.use(function(req : PopulatedRequest, res, next) {
-    req.initialState = {
-        quotes: {},
-    };
-    next();
-});
-app.use("/quote/:id", function(req : PopulatedRequest, res, next) {
-    console.log("populating state", api_handle.basePath);
-    api_handle.qdbQuoteGetById({ quoteId: req.params.id, })
-        .then((quote) => {
-            // fetch the quote on the server
-            req.initialState.quotes = {[quote.id]: quote};
-            next();
-        })
-        .catch((e) => {
-            console.log("state population failed!", e);
-            next();
-        });
-});
-app.use("/rand", function(req : PopulatedRequest, res, next) {
-    console.log("populating state", api_handle.basePath);
-    api_handle.qdbQuoteRand()
-        .then((quote) => {
-            // fetch the quote on the server
-            req.initialState.quotes = {[quote.id]: quote};
-            next();
-        })
-        .catch((e) => {
-            console.log("state population failed!", e);
-            next();
-        });
-});
-
-app.use(function ssr(req : PopulatedRequest, res : express.Response) {
-    const routerProps = match(routes, req.originalUrl);
-    console.log(req.initialState);
-    const initial_dom = InfernoServer.renderToString(
-        <State initialState={req.initialState}>
-            <RouterContext {...routerProps}/>
-        </State>
-    );
-    res.send(renderBasePage(initial_dom, req.initialState));
-});
-
-function renderBasePage(initial_dom, initial_state) {
-    let asset_base = __ASSET_URI_BASE__;
-
-    return `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>qdb</title>
-            <link rel="stylesheet" href="${asset_base}/qdb.bundle.css"/>
-            <script src="https://use.fontawesome.com/8c6513badd.js"></script>
-            <script>
-                window.__initialState=${JSON.stringify(initial_state)};
-            </script>
-        </head>
-        <body>
-            <section id="inferno-host">${initial_dom}</section>
-            <script src="${asset_base}/qdb.bundle.js"></script>
-        </body>
-        </html>`;
-}
-
 app.listen(8000, "localhost");

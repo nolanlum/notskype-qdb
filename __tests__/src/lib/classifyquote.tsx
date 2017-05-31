@@ -174,7 +174,20 @@ describe("classifyQuote", function() {
         it("should reject not-quite irc logs", function() {
             reject("<asd > askdhjalskjdh");
             reject("<as asd> askdhjalskjdh");
-            reject("<as asd> ");
+        });
+
+        it("should recognize multiline irc log w/ trailing slash", function() {
+            expect(classifyQuote(
+                "<Max> multi\n<Max> line\n<Max> \n<Max> message\n")
+            ).toEqual({
+                    type: "irc",
+                    messages: [
+                        { speaker: "Max", body: "multi" },
+                        { speaker: "Max", body: "line" },
+                        { speaker: "Max", body: "" },
+                        { speaker: "Max", body: "message" },
+                    ]
+                });
         });
 
     })

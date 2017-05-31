@@ -52,7 +52,7 @@ function windowsDiscordExtractor(match) {
 <tttb> Why did the programmer quit his job?
 <tttb> because he didn't get arrays
 */
-const ircRegex = /(^<([^\s]+)> (.+?)$(\n|\r\n)?)+/m;
+const ircRegex = /(^<([^\s]+)> ([^\r\n]+)?(\n|\r\n)?)+/m;
 
 /*
 Tiffany [5:15 PM]
@@ -127,7 +127,7 @@ function parseMultilineLog(lineRegex, extractor, rawQuote, ignore?) {
                 });
             }
             let msg = extractor(match);
-            currentMessage = [msg.body];
+            currentMessage = [msg.body || ""];
             currentAuthor = msg.speaker;
             rawQuote = rawQuote.substring(match[0].length);
         } else {
@@ -169,7 +169,9 @@ function discordExtractor(match) {
 function ircExtractor(match) {
     return {
         speaker: match[2],
-        body: match[3]
+        // body is optional in the regex in order to capture
+        // normalzied "irc" format.
+        body: match[3] || "",
     };
 }
 
