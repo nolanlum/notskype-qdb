@@ -32,11 +32,11 @@ export const quoteId = (api_handle) =>
     (req : PopulatedRequest, res, next) => {
         // try to fetch quote ID from prepopulated state
         const id = req.params.id;
-        const quote = req.initialState
+        const stateQuote = req.initialState
             ? req.initialState.quotes[id]
             : null;
 
-        const passMetaWithQuote = () => {
+        const passMetaWithQuote = (quote) => {
             if (!quote) return;
 
             let parsedQuote = classifyQuote(quote.body);
@@ -57,12 +57,12 @@ export const quoteId = (api_handle) =>
 
         // fetch the quote if it was not in the state, otherwise
         // use the stored quote in the next stage of middleware.
-        if (!quote) {
+        if (!stateQuote) {
             api_handle.qdbQuoteGetById({quoteId: id})
-                .then()
-                .catch()
-                .then(passMetaWithQuote);
+                .then(fetchedQuote => {
+                    passMetaWithQuote(fetchedQuote);
+                }, next);
         } else {
-            passMetaWithQuote();
+            passMetaWithQuote(stateQuote);
         }
     };
