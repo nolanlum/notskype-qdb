@@ -24,8 +24,8 @@ app.use("/api", proxy({
 app.use(state.init);
 
 // metadata pipeline
-app.use("/quote/:id", metadata.quoteId(api_handle));
 app.use("/quote/:id", state.quoteId(api_handle));
+app.use("/quote/:id", metadata.quoteId(api_handle));
 app.get("/quote/:id", ssr);
 
 app.use("/", metadata.root(api_handle));
