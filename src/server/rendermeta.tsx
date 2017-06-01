@@ -1,3 +1,5 @@
+import Inferno from "inferno";
+
 interface MetaAttrs {
     title? : string;
     description? : string;
@@ -14,7 +16,7 @@ export default function renderMetadata(attrs : MetaAttrs) {
     const out = [];
 
     const meta = (prop, content) => {
-        if (content) out.push(`<meta property="${prop}" content="${content}" />`);
+        if (content) out.push(<meta property={prop} content={content} />);
     };
 
     // facebook open graph tags
@@ -44,6 +46,5 @@ export default function renderMetadata(attrs : MetaAttrs) {
         meta("twitter:label2", attrs.twitterLabels.label2);
         meta("twitter:data2", attrs.twitterLabels.data1);
     }
-
-    return out.join("\n");
+    return out;
 }
