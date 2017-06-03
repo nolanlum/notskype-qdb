@@ -28,7 +28,9 @@ function renderBasePage(
         headerMeta : string) {
 
     let asset_base = __ASSET_URI_BASE__;
-    let stateScript = `window.__initialState=${JSON.stringify(initial_state)};`;
+    let initialStateJson = JSON.stringify(initial_state);
+    let escapedJson = initialStateJson.replace(/<\//g, "<\\/");
+    let stateScript = `window.__initialState=${escapedJson};`;
 
     return "<!DOCTYPE html>" + InfernoServer.renderToString(
         <html>
