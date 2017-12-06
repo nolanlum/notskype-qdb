@@ -1,6 +1,6 @@
 import Component from "inferno-component";
 import {Link} from "inferno-router";
-import fecha from "fecha";
+import {format} from "fecha";
 
 import classifyQuote from "../lib/classifyquote";
 import {wasYesterday} from "../lib/datelib";
@@ -85,15 +85,15 @@ const Quote = ({id, author, body, addedAt}) => {
     let now = new Date();
     let addedAtRelative =
         (addedAtDate.getDate() === now.getDate()) ?
-        fecha.format(addedAtDate, "[Today at] h:mma") :
+        format(addedAtDate, "[Today at] h:mma") :
         wasYesterday(addedAtDate, now) ?
-        fecha.format(addedAtDate, "[Yesterday at] h:mma") :
+        format(addedAtDate, "[Yesterday at] h:mma") :
         (addedAtDate.getFullYear() === now.getFullYear()) ?
-        fecha.format(addedAtDate, "MMMM D [at] h:mma") :
-        fecha.format(addedAtDate, "MMMM D, YYYY [at] h:mma");
+        format(addedAtDate, "MMMM D [at] h:mma") :
+        format(addedAtDate, "MMMM D, YYYY [at] h:mma");
 
     let addedAtReal =
-        fecha.format(addedAtDate, "dddd, MMMM D, YYYY [at] h:mma");
+        format(addedAtDate, "dddd, MMMM D, YYYY [at] h:mma");
 
     return (
         <article class="quote">
