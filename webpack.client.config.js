@@ -20,7 +20,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: ['babel-loader', 'ts-loader'],
+                use: ['babel-loader', 'ts-loader'],
                 exclude: /node_modules/
             },
             {
@@ -38,7 +38,7 @@ module.exports = {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    loader: [
+                    use: [
                         "css-loader",
                         "postcss-loader",
                         "sass-loader"

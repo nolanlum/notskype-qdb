@@ -2,6 +2,6 @@
 ## Developing
 ```
 npm install
-typings install
-webpack
+webpack --watch
+nodemon dist/server.bundle.js
 ```
