@@ -57,10 +57,12 @@
     "http-proxy-middleware": "^0.17.4",
     "inferno": "^3.1.0",
     "inferno-component": "^3.1.0",
+    "inferno-redux": "^3.5.0",
     "inferno-router": "^3.1.0",
     "inferno-server": "^3.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "jest": "^19.0.2"
+    "jest": "^19.0.2",
+    "redux": "^3.6.0"
   },
   "jest": {
     "transform": {

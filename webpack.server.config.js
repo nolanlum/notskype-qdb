@@ -30,7 +30,7 @@ module.exports = {
                 loader: "tslint-loader",
                 options: {
                     typeCheck: true,
-                    emitErrors: true,
+                    emitErrors: false,
                     failOnHint: true
                 },
                 enforce: "pre"
