@@ -54,8 +54,8 @@ module.exports = {
             filename: 'qdb.bundle.css',
             allChunks: true
         }),
-        new CopyWebpackPlugin([
-            { from: "static" } // Copy contents of /static to /dist/client/
-        ])
+        // new CopyWebpackPlugin([
+        //     { from: "static" } // Copy contents of /static to /dist/client/
+        // ])
     ],
 }
