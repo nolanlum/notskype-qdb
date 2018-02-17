@@ -63,7 +63,6 @@ class ApplicationFrame extends Component<{}, {}> {
             }
         })
         .then(quote => {
-            console.log(`submitted quote: id = ${quote["id"]}`);
             this.history.push(`/quote/${quote["id"]}`);
         });
     }
