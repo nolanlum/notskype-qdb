@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 require("../../style/searchbar.scss");
 
 interface SearchBarProps {

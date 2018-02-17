@@ -1,4 +1,5 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
+import {withRouter} from "inferno-router";
 import Quote from "../components/quote";
 import Keybindings from "../components/keybindings";
 import { ErrorPage404 } from "../containers/errorpage";
@@ -20,26 +21,26 @@ interface PermalinkQuoteState {
 
 class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState> {
 
-    router : any;
+    history : any;
     loading : boolean;
 
-    constructor(props, {quotes, router}) {
-        super(props, {router});
-        this.router = router;
+    constructor(props, {quotes}) {
+        super(props);
+        this.history = props.history;
         this.loading = false;
         this.state = {
             // will be undefined if not present in global context
-            quote: quotes[props.params.id],
+            quote: quotes[props.match.params.id],
             missing: false,
         };
     }
 
     componentDidMount() {
-        this.updateQuotes(this.props.params.id);
+        this.updateQuotes(this.props.match.params.id);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.updateQuotes(nextProps.params.id);
+        this.updateQuotes(nextProps.match.params.id);
     }
 
     updateQuotes(id) {
@@ -62,7 +63,7 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
 
         this.context.getQuote(nextId)
             .then(
-                () => this.router.push(`/quote/${nextId}`),
+                () => this.history.push(`/quote/${nextId}`),
                 () => {})
             .then(() => {
                 this.loading = false;
@@ -76,7 +77,7 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
         if (this.state && this.state.quote) {
             let {quote} = this.state;
             let bindings = {
-                "a": () => this.router.push(`/quote/${Math.max(1, quote.id - 1)}`),
+                "a": () => this.history.push(`/quote/${Math.max(1, quote.id - 1)}`),
                 "d": this.loadNextQuote.bind(this),
             };
             return (
@@ -98,4 +99,4 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
     }
 }
 
-export default PermalinkQuote;
+export default withRouter(PermalinkQuote);

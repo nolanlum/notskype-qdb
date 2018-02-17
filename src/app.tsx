@@ -1,5 +1,5 @@
-import Inferno from "inferno";
-import {Router} from "inferno-router";
+import {render} from "inferno";
+import {BrowserRouter} from "inferno-router";
 import State from "./containers/state";
 import routes from "./routes";
 
@@ -14,11 +14,11 @@ interface AlteredWindow extends Window {
 
 let container = document.getElementById("inferno-host");
 if (container) {
-    Inferno.render(
+    render(
         <State initialState={(window as AlteredWindow).__initialState}>
-            <Router history={browserHistory}>
+            <BrowserRouter history={browserHistory}>
                 {routes}
-            </Router>
+            </BrowserRouter>
         </State>,
         container);
 }

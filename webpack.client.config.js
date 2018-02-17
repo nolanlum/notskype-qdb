@@ -12,7 +12,7 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     cache: true,
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-cheap-module-source-map',
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
     },
@@ -54,8 +54,8 @@ module.exports = {
             filename: 'qdb.bundle.css',
             allChunks: true
         }),
-        // new CopyWebpackPlugin([
-        //     { from: "static" } // Copy contents of /static to /dist/client/
-        // ])
+        new CopyWebpackPlugin([
+            { from: "static" } // Copy contents of /static to /dist/client/
+        ])
     ],
 }

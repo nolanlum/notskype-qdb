@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 import {Router} from "inferno-router";
 
 import Nav from "../containers/nav";

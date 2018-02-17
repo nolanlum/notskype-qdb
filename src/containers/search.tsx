@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 
 import Quote from "../components/quote";
 import * as api from "../api/api";
@@ -26,7 +26,7 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
     }
 
     componentDidMount() {
-        this.updateQuote(this.props.params.query);
+        this.updateQuote(this.props.match.params.query);
     }
 
     updateQuote(query) {

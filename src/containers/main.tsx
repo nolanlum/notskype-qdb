@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 
 import Quote from "../components/quote";
 import Header from "./header";
