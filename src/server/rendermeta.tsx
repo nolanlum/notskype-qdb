@@ -1,5 +1,3 @@
-import Inferno from "inferno";
-
 interface MetaAttrs {
     title? : string;
     description? : string;
