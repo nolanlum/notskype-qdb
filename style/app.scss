@@ -1,4 +1,5 @@
 @import './colors.scss';
+@import './lato.scss';
 
 *, *:after, *:before {
     box-sizing: border-box;
@@ -33,11 +34,7 @@ html, body {
     & > [class*="container"] {
         flex-grow: 1;
     }
-
-
 }
-
-@import url('https://fonts.googleapis.com/css?family=Lato');
 
 html, input, pre {
     font-family: Lato, monospace;
