@@ -62,8 +62,8 @@ class ApplicationFrame extends Component<{}, {}> {
                 body: payload
             }
         })
-        .then(() => {
-            location.reload();
+        .then(quote => {
+            this.history.push(`/quote/${quote["id"]}`);
         });
     }
 
