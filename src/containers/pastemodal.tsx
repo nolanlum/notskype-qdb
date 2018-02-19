@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 
 import Quote from "../components/quote";
 import SearchBar from "../components/searchbar";
@@ -49,7 +49,10 @@ export default class PasteModal extends Component<PasteModalProps, PasteModalSta
             this.props.visible ?
                 <div class={ "paste-modal-container" }>
                     <div onClick={ this.props.onDismiss.bind(this) } class={ "paste-modal-overlay" }></div>
-                    <PasteInput onSubmit={ this.props.onSubmit.bind(this) } />
+                    <PasteInput onSubmit={(quote : ClassifiedQuote) => {
+                        this.props.onSubmit(quote);
+                        this.props.onDismiss();
+                    }}/>
                 </div>
                 : null
         );

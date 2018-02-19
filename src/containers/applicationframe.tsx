@@ -1,5 +1,5 @@
-import Component from "inferno-component";
-import {Router} from "inferno-router";
+import {Component} from "inferno";
+import {withRouter} from "inferno-router";
 
 import Nav from "../containers/nav";
 import Header from "../containers/header";
@@ -22,30 +22,30 @@ See src/containers/router for details
 class ApplicationFrame extends Component<{}, {}> {
 
     private api_handle : api.QuoteApi;
-    private router : any;
+    private history : any;
     private randQuote : any;
     private keyListener : EventListener;
 
-    constructor(props, {router, randQuote}) {
+    constructor(props, {randQuote}) {
         super(props);
-        this.router = router;
+        this.history = props.history;
         this.randQuote = randQuote;
         this.api_handle = new api.QuoteApi();
     }
 
     __onSearch(query : string) {
         if (query.length === 0) {
-            this.router.push("/");
+            this.history.push("/");
         } else {
             let escapedQuery = encodeURIComponent(query);
-            this.router.push(`/search/${escapedQuery}`);
+            this.history.push(`/search/${escapedQuery}`);
         }
     }
 
     __onRandom() {
         this.randQuote()
             .then(quote => {
-                this.router.push(`/quote/${quote.id}`);
+                this.history.push(`/quote/${quote.id}`);
             });
     }
 
@@ -62,8 +62,8 @@ class ApplicationFrame extends Component<{}, {}> {
                 body: payload
             }
         })
-        .then(() => {
-            location.reload();
+        .then(quote => {
+            this.history.push(`/quote/${quote["id"]}`);
         });
     }
 
@@ -86,4 +86,4 @@ class ApplicationFrame extends Component<{}, {}> {
     }
 }
 
-export default ApplicationFrame;
+export default withRouter(ApplicationFrame);

@@ -13,7 +13,7 @@ describe("classifyQuote", function() {
     describe("discord", function() {
 
         it("should parse a discord log", function() {
-            let discordLog = "[9:06 PM] Wheatless: wow gj gabe"
+            let discordLog = "[9:06 PM] Wheatless: wow gj gabe";
             expect(classifyQuote(discordLog)).toEqual({
                 type: "discord",
                 messages: [
@@ -46,7 +46,7 @@ describe("classifyQuote", function() {
                     { speaker: "Jay Tau", body: "!aku texas\n!aku texas" },
                 ]
             });
-        })
+        });
 
 
         it("should parse a discord log with crlf", function() {
@@ -57,7 +57,7 @@ describe("classifyQuote", function() {
                     { speaker: "Jay Tau", body: "!aku texas" },
                 ]
             });
-        })
+        });
 
         it("should reject not-quite discord logs", function() {
             reject("[9:06 ZM] PJ: [tiff snaps into the sunset]");
@@ -68,14 +68,14 @@ describe("classifyQuote", function() {
             reject("[1:00 PM] PJ : [tiff snaps into the sunset]");
             reject("[1:00 PM] PJ : ");
         });
-    })
+    });
 
 
     // windows discord
     describe("windows discord", function() {
 
         it("parses single user log", function() {
-            let discordLogRelativeTime = "Jay Tau - Last Tuesday at 11:15 PM\n" + 
+            let discordLogRelativeTime = "Jay Tau - Last Tuesday at 11:15 PM\n" +
                 "!aku ohhh\n" +
                 "!aku ohhh";
 
@@ -86,7 +86,7 @@ describe("classifyQuote", function() {
                 ]
             });
 
-            let discordLogDateTime = "Jay Tau - 04/05/2019\n" + 
+            let discordLogDateTime = "Jay Tau - 04/05/2019\n" +
                 "!aku ohhh\n" +
                 "!aku ohhh";
 
@@ -136,13 +136,13 @@ describe("classifyQuote", function() {
             });
         });
 
-    })
+    });
 
     // irc
     describe("irc", function() {
 
         it("should recognize an irc log", function() {
-            let ircLog = "<tttb> Why did the programmer quit his job?"
+            let ircLog = "<tttb> Why did the programmer quit his job?";
             expect(classifyQuote(ircLog)).toEqual({
                 type: "irc",
                 messages: [
@@ -169,7 +169,7 @@ describe("classifyQuote", function() {
                     { speaker: "llc", body: "ayy lmao" },
                 ]
             });
-        })
+        });
 
         it("should reject not-quite irc logs", function() {
             reject("<asd > askdhjalskjdh");
@@ -190,29 +190,29 @@ describe("classifyQuote", function() {
                 });
         });
 
-    })
+    });
 
     // slack
     describe("slack", function() {
 
         it("should recognize a slack log", function() {
             let slackLog =
-                "Tiffany [5:15 PM]\n"+
-                "shucks\n"+
-                "\n"+
-                "melanie \n"+
-                "[5:16 PM] \n"+
-                "Qq\n"+
-                "\n"+
-                "Sean★\n"+
-                "[5:18 PM] \n"+
-                "@melanie did you ever see my thread replies this afternoon\n"+
-                "\n"+
-                "melanie\n"+ 
+                "Tiffany [5:15 PM]\n" +
+                "shucks\n" +
+                "\n" +
+                "melanie \n" +
+                "[5:16 PM] \n" +
+                "Qq\n" +
+                "\n" +
+                "Sean★\n" +
+                "[5:18 PM] \n" +
+                "@melanie did you ever see my thread replies this afternoon\n" +
+                "\n" +
+                "melanie\n" +
                 "[5:23 PM] \n" +
                 "I just got home, so I'm gonna read them now!\n";
 
-            expect(classifyQuote("Tiffany [5:15 PM]\n"+
+            expect(classifyQuote("Tiffany [5:15 PM]\n" +
                 "shucks\n")).toEqual({
                 type: "slack",
                 messages: [
@@ -220,8 +220,8 @@ describe("classifyQuote", function() {
                 ]
             });
 
-            expect(classifyQuote("Tiffany [05:15 AM]\n"+
-                "shucks\n"+
+            expect(classifyQuote("Tiffany [05:15 AM]\n" +
+                "shucks\n" +
                 "golly\n")).toEqual({
                 type: "slack",
                 messages: [
@@ -229,10 +229,10 @@ describe("classifyQuote", function() {
                 ]
             });
 
-            expect(classifyQuote("Max [5:15 PM]\n"+
+            expect(classifyQuote("Max [5:15 PM]\n" +
                 ":thinking_face:\n" +
                 "\n" +
-                "Max [5:15 PM]\n"+
+                "Max [5:15 PM]\n" +
                 ":thinccing_face:\n" +
                 "\n"
                 )).toEqual({
@@ -247,15 +247,15 @@ describe("classifyQuote", function() {
 
 
         it("should parse a crlf slack log", function() {
-            expect(classifyQuote("Tiffany [05:15 AM]\n"+
-                "shucks\r\n"+
+            expect(classifyQuote("Tiffany [05:15 AM]\n" +
+                "shucks\r\n" +
                 "golly\r\n")).toEqual({
                 type: "slack",
                 messages: [
                     { speaker: "Tiffany", body: "shucks\ngolly" },
                 ]
-            });        
-        })
+            });
+        });
 
         it("should reject not-quite slack logs", function() {
             reject("Tiffany [500:15 PM]\n" +
@@ -271,7 +271,7 @@ describe("classifyQuote", function() {
                 "shucks\n");
 
         });
-        
+
     };
 
-})
+});

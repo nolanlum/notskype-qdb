@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 import classifyQuote, {Quote} from "../lib/classifyquote";
 import normalizeQuote from "../lib/normalizequote";
 import ResizingTextarea from "./resizing-textarea";

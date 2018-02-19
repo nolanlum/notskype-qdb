@@ -12,7 +12,7 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     cache: true,
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-cheap-module-source-map',
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
     },
@@ -20,7 +20,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: ['babel-loader', 'ts-loader'],
+                use: ['babel-loader', 'ts-loader'],
                 exclude: /node_modules/
             },
             {
@@ -38,7 +38,7 @@ module.exports = {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    loader: [
+                    use: [
                         "css-loader",
                         "postcss-loader",
                         "sass-loader"
@@ -54,8 +54,8 @@ module.exports = {
             filename: 'qdb.bundle.css',
             allChunks: true
         }),
-        // new CopyWebpackPlugin([
-        //     { from: "static" } // Copy contents of /static to /dist/client/
-        // ])
+        new CopyWebpackPlugin([
+            { from: "static" } // Copy contents of /static to /dist/client/
+        ])
     ],
 }

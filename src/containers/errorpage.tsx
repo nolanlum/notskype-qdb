@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 import { IndexLink } from "inferno-router";
 
 import Quote from "../components/quote";

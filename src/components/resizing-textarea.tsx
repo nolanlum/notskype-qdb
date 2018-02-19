@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 
 export interface ResizingTextareaProps {
     onInput : (evt : Event) => void;

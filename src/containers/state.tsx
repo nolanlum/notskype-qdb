@@ -1,4 +1,4 @@
-import Component from "inferno-component";
+import {Component} from "inferno";
 import * as api from "../api/api";
 
 interface StateState {
