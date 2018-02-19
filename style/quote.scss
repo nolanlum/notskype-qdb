@@ -42,6 +42,8 @@ $ratio: 2.8284271247 / 2;
         border-width: 1px;
         border-color: $theme-border-light;
         box-shadow: 8px 8px $theme-box-shadow;
+        // overflow: hidden;
+        word-break: break-all;
     }
 
     .quote-body {
@@ -84,5 +86,14 @@ $ratio: 2.8284271247 / 2;
 
     &-body {
         display: inline-block;
+    }
+}
+
+@media (max-width: $mobile-breakpoint) {
+    .quote-timestamp {
+        font-size: 0.8em;
+        .quote-timestamp-timestamp {
+            // display: block;
+        }
     }
 }

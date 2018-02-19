@@ -52,9 +52,24 @@ export default class Nav extends Component<NavProps, NavState> {
             <section class={ "nav-wrapper" }>
                 <nav class={ "nav-container" }>
                     <ul class={ "nav-links" }>
-                        <li class={ "nav-link-item" }><Link to="/">Home</Link></li>
-                        <li class={ "nav-link-item" }><a href="#" onClick={ this.__onRandom.bind(this) }>Random</a></li>
-                        <li class={ "nav-link-item" }><a href="#" onClick={ this.__onAddQuote.bind(this) }>Add Quote</a></li>
+                        <li class={ "nav-link-item" }>
+                            <Link to="/">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                                Home
+                           </Link>
+                        </li>
+                        <li class={ "nav-link-item" }>
+                            <a href="#" onClick={ this.__onRandom.bind(this) }>
+                                <i class="fa fa-random" aria-hidden="true"></i>
+                                Random
+                            </a>
+                        </li>
+                        <li class={ "nav-link-item" }>
+                            <a href="#" onClick={ this.__onAddQuote.bind(this) }>
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Add Quote
+                            </a>
+                        </li>
                     </ul>
                     <SearchBar onSearch={ this.props.onSearch.bind(this) } />
                 </nav>

@@ -36,9 +36,10 @@ function renderBasePage(
         <head>
             <title>qdb</title>
             <link rel="stylesheet" href={`${asset_base}/qdb.bundle.css`}/>
-            {/*<script src="https://use.fontawesome.com/8c6513badd.js"/>*/}
+            {<script src="https://use.fontawesome.com/8c6513badd.js"/>}
             <script dangerouslySetInnerHTML={{__html: stateScript}}/>
             {headerMeta}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         </head>
         <body>
             <section id="inferno-host">{initial_dom}</section>

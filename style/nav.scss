@@ -44,9 +44,32 @@
         width: 100px;
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
     }
+
+    .nav-link-item a .fa {
+        display: none;
+    }
     
     .nav-link-item a:hover {
         color: $theme-background-light;
         background-color: $theme-foreground-dark;
+    }
+}
+
+@media (max-width: $mobile-breakpoint) {
+    .nav-container {
+        .nav-link-item {
+            position: relative;
+            width: 50px;
+            overflow: hidden;
+        }
+
+        .nav-link-item a {
+            font-size: 0;
+        }
+
+        .nav-link-item a .fa {
+            display: initial;
+            font-size: initial;
+        }
     }
 }
