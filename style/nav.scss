@@ -22,7 +22,7 @@
     background-color: $theme-background-light;
     
     .nav-links {
-        display: inline-block;
+        display: flex;
         list-style: none;
         height: 100%;
     }
@@ -57,6 +57,10 @@
 
 @media (max-width: $mobile-breakpoint) {
     .nav-container {
+        .nav-links {
+            width: 150px;
+        }
+
         .nav-link-item {
             position: relative;
             width: 50px;
@@ -71,5 +75,9 @@
             display: initial;
             font-size: initial;
         }
+    }
+
+    .searchbar-input {
+        flex-grow: 1;
     }
 }

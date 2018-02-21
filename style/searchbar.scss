@@ -1,11 +1,12 @@
 @import "colors.scss";
 
 .searchbar {
-    display: inline-block;
+    display: flex;
     position: relative;
     margin-left: auto;
     padding: 1px;
     background-color: $theme-border-light;
+    max-width: 230px
 }
 
 .searchbar-input {
@@ -13,10 +14,10 @@
     position: relative;
     outline: none;
     border: none;
-    width: 200px;
     padding: 5px;
     background-color: $theme-border-light;
     color: $theme-foreground-dark;
+    flex-grow: 1;
 }
 
 .searchbar-icon {
