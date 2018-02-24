@@ -39,3 +39,8 @@ html, body {
 html, input, pre {
     font-family: Lato, monospace;
 }
+
+a {
+    // Stop firefox from putting dotted outlines around things
+    outline: none;
+}
