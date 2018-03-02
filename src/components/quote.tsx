@@ -101,8 +101,10 @@ const Quote = ({id, author, body, addedAt}) => {
                 <p class="quote-text">{bodyElements}</p>
             </section>
             <aside class="quote-timestamp">
-                added by {author}
-                <span title={addedAtReal}>
+                <span class="quote-timestamp-author">
+                    added by {author}
+                </span>
+                <span class="quote-timestamp-timestamp" title={addedAtReal}>
                     <Link to={`/quote/${id}`}> {addedAtRelative} </Link>
                 </span>
             </aside>

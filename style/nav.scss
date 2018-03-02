@@ -22,7 +22,7 @@
     background-color: $theme-background-light;
     
     .nav-links {
-        display: inline-block;
+        display: flex;
         list-style: none;
         height: 100%;
     }
@@ -43,10 +43,42 @@
         height: 80%;
         width: 100px;
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+        outline: none;
+    }
+
+    .nav-link-item a .fa {
+        display: none;
     }
     
     .nav-link-item a:hover {
         color: $theme-background-light;
         background-color: $theme-foreground-dark;
+    }
+}
+
+@media (max-width: $mobile-breakpoint) {
+    .nav-container {
+        .nav-links {
+            width: 150px;
+        }
+
+        .nav-link-item {
+            position: relative;
+            width: 50px;
+            overflow: hidden;
+        }
+
+        .nav-link-item a {
+            font-size: 0;
+        }
+
+        .nav-link-item a .fa {
+            display: initial;
+            font-size: initial;
+        }
+    }
+
+    .searchbar-input {
+        flex-grow: 1;
     }
 }
