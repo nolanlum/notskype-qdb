@@ -43,7 +43,7 @@ $ratio: 2.8284271247 / 2;
         border-color: $theme-border-light;
         box-shadow: 8px 8px $theme-box-shadow;
         // overflow: hidden;
-        word-break: break-all;
+        word-break: break-word;
     }
 
     .quote-body {
