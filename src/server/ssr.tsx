@@ -11,6 +11,7 @@ declare var __ASSET_URI_BASE__ : string;
 
 export function ssr(req : PopulatedRequest, res : express.Response) {
     const routerProps = matchPath(routes, req.originalUrl);
+    console.log("ssr with", req.cookies.qdbToken ? "token" : "no token");
 
     res.send(renderBasePage(
         <State initialState={req.initialState}>

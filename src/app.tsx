@@ -23,3 +23,4 @@ if (container) {
         container);
 }
 
+console.log("initial state: ", (window as AlteredWindow).__initialState);

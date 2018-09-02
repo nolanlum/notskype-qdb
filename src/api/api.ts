@@ -61,7 +61,6 @@ export interface Quote {
 }
 
 
-
 /**
  * QuoteApi - fetch parameter creator
  */
@@ -204,6 +203,30 @@ export const QuoteApiFetchParamCreator = {
             options: fetchOptions,
         };
     },
+    /**
+     * Exchange slack oauth code for qdb token
+     * @param code The slack oauth code
+     */
+    qdbAuthToken(params: { "code": string; }, options?: any): FetchArgs {
+        if (params["code"] == null) {
+            throw new Error("Missing required parameter body when calling qdbQuotePost");
+        }
+        const baseUrl = `/auth/token`;
+        let urlObj = url.parse(baseUrl, true);
+        urlObj.query = assign({}, urlObj.query, {
+            "slack_code": params["code"],
+        });
+        let fetchOptions: RequestInit = assign({}, { method: "GET" }, options);
+
+        let contentTypeHeader: Dictionary<string> = {};
+        if (contentTypeHeader) {
+            fetchOptions.headers = contentTypeHeader;
+        }
+        return {
+            url: url.format(urlObj),
+            options: fetchOptions,
+        };
+    },
 };
 
 /**
@@ -307,6 +330,22 @@ export const QuoteApiFp = {
             });
         };
     },
+    /**
+     * Exchange slack oauth code for qdb token
+     * @param code The slack oauth code
+     */
+    qdbAuthToken(params: { "code": string;  }, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+        const fetchArgs = QuoteApiFetchParamCreator.qdbAuthToken(params, options);
+        return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+            return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
+                if (response.status === 200) {
+                    return response.text();
+                } else {
+                    throw response;
+                }
+            });
+        };
+    },
 };
 
 /**
@@ -355,6 +394,13 @@ export class QuoteApi extends BaseAPI {
      */
     qdbQuoteRand(options?: any) {
         return QuoteApiFp.qdbQuoteRand(options)(this.fetch, this.basePath);
+    }
+    /**
+     * Exchange slack oauth code for qdb token
+     * @param code The slack oauth code
+     */
+    qdbAuthToken(params: { "code": string; }, options?: any) {
+        return QuoteApiFp.qdbAuthToken(params, options)(this.fetch, this.basePath);
     }
 };
 
@@ -405,6 +451,13 @@ export const QuoteApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          */
         qdbQuoteRand(options?: any) {
             return QuoteApiFp.qdbQuoteRand(options)(fetch, basePath);
+        },
+        /**
+         * Exchange slack oauth code for qdb token
+         * @param code The slack oauth code
+         */
+        qdbAuthToken(params: { "code": string; }, options?: any) {
+            return QuoteApiFp.qdbAuthToken(params, options)(fetch, basePath);
         },
     };
 };

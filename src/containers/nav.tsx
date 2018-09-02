@@ -71,6 +71,12 @@ export default class Nav extends Component<NavProps, NavState> {
                             </a>
                         </li>
                     </ul>
+                        <li class={ "nav-link-item" }>
+                            <Link to="/login">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                                Login
+                           </Link>
+                        </li>
                     <SearchBar onSearch={ this.props.onSearch.bind(this) } />
                 </nav>
                 <PasteModal

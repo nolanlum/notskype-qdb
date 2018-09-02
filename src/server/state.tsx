@@ -4,6 +4,7 @@ import {PopulatedRequest} from "./populatedrequest";
 export const init = (req : PopulatedRequest, res, next) => {
     req.initialState = {
         quotes: {},
+        authenticated: req.cookies.qdbToken !== undefined, // req.get("X-Qdb-Token") !== undefined,
     };
     next();
 };

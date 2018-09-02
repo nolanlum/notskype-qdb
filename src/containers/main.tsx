@@ -21,7 +21,7 @@ export interface MainState {
 class Main extends Component<{}, MainState> {
     private api_handle : api.QuoteApi;
 
-    constructor(props) {
+    constructor(props, {authenticated}) {
         super(props);
         this.state = {
             quotes: [],
@@ -33,7 +33,9 @@ class Main extends Component<{}, MainState> {
 
         this.registerInfiniteScroll();
 
-        this.loadMore(); // initial data fetch
+        if (authenticated) {
+            this.loadMore(); // initial data fetch
+        }
     }
 
     registerInfiniteScroll() {
