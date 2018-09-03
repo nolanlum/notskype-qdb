@@ -3,6 +3,7 @@ import * as api from "../api/api";
 
 interface StateState {
     quotes : {[id : number] : api.Quote};
+    authenticated : boolean;
 }
 
 interface StateProps {
@@ -21,6 +22,7 @@ class State extends Component<StateProps, StateState> {
     getChildContext() {
         return {
             quotes: this.state.quotes,
+            authenticated: this.state.authenticated,
             addQuote: this.addQuotes.bind(this),
             getQuote: this.getQuote.bind(this),
             randQuote: this.randQuote.bind(this),
@@ -33,9 +35,9 @@ class State extends Component<StateProps, StateState> {
             if (existingQuote !== undefined) {
                 resolve(existingQuote);
             } else {
-                this.api_handle.qdbQuoteGetById({
-                        quoteId: quoteId
-                    })
+                this.api_handle.qdbQuoteGetById(
+                        quoteId
+                    )
                     .then((quote) => {
                         this.setState({
                             quotes: {

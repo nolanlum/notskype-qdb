@@ -20,9 +20,12 @@ export interface NavState {
 }
 
 export default class Nav extends Component<NavProps, NavState> {
+    authenticated : boolean;
 
-    constructor(props) {
+    constructor(props, {authenticated}) {
         super(props);
+
+        this.authenticated = authenticated;
 
         this.state = {
             showAddQuote: false
@@ -45,6 +48,11 @@ export default class Nav extends Component<NavProps, NavState> {
     __onRandom(e) {
         e.preventDefault();
         this.props.onRandom();
+    }
+
+    __onLogout() {
+        document.cookie = `qdbToken=;expires=${(new Date(0)).toUTCString()};path=/`;
+        window.location.assign("/");
     }
 
     render() {
@@ -70,6 +78,21 @@ export default class Nav extends Component<NavProps, NavState> {
                                 Add Quote
                             </a>
                         </li>
+                        {
+                            this.authenticated
+                                ?   <li class={ "nav-link-item" }>
+                                        <a href="#" onClick={ this.__onLogout.bind(this) }>
+                                            <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+                                            Logout
+                                        </a>
+                                    </li>
+                                :   <li class={ "nav-link-item" }>
+                                        <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team&client_id=2370882641.196124303072">
+                                            <i class="fa fa-sign-in-alt" aria-hidden="true"></i>
+                                            Login
+                                        </a>
+                                    </li>
+                        }
                     </ul>
                     <SearchBar onSearch={ this.props.onSearch.bind(this) } />
                 </nav>

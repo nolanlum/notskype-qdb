@@ -21,7 +21,7 @@ export interface MainState {
 class Main extends Component<{}, MainState> {
     private api_handle : api.QuoteApi;
 
-    constructor(props) {
+    constructor(props, {authenticated}) {
         super(props);
         this.state = {
             quotes: [],
@@ -33,7 +33,9 @@ class Main extends Component<{}, MainState> {
 
         this.registerInfiniteScroll();
 
-        this.loadMore(); // initial data fetch
+        if (authenticated) {
+            this.loadMore(); // initial data fetch
+        }
     }
 
     registerInfiniteScroll() {
@@ -54,17 +56,15 @@ class Main extends Component<{}, MainState> {
     loadMore() {
         this.state.fetching = true;
 
-        this.api_handle.qdbQuoteGet({
-            count : PER_PAGE,
-            offset : this.state.offset
-        }).then((quotes) => {
+        this.api_handle.qdbQuoteGet(
+            PER_PAGE,
+            this.state.offset
+        ).then((quotes) => {
             this.setState({
                 quotes : this.state.quotes.concat(quotes),
                 offset : this.state.offset + quotes.length,
                 fetching : false
             });
-
-            console.log(this.state);
         });
 
     }

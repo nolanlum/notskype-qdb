@@ -10,7 +10,7 @@ import Search from "./containers/search";
 export default
     <ApplicationFrame>
         <Switch>
-            <Route exact path="/" component={ Main }/>
+            <Route exact path="/" component={ Main } />
             <Route path="/quote/:id" component={ PermalinkQuote } />
             <Route path="/search/:query" component={ Search } />
             <Route path="*" component={ ErrorPage404 } />

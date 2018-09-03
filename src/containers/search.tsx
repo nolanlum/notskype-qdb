@@ -31,9 +31,9 @@ class PermalinkQuote extends Component<PermalinkQuoteProps, PermalinkQuoteState>
 
     updateQuote(query) {
         if (query) {
-            this.api_handle.qdbQuoteFind({
-                    "query": query
-                })
+            this.api_handle.qdbQuoteFind(
+                  query
+                )
                 .then((quotes) => this.setState({quotes}))
                 .catch((e) => console.error(e));
         }

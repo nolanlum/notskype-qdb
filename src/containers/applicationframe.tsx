@@ -58,9 +58,7 @@ class ApplicationFrame extends Component<{}, {}> {
             payload = normalizeQuote(quote);
         }
         this.api_handle.qdbQuotePost({
-            body: {
-                body: payload
-            }
+            body: payload
         })
         .then(quote => {
             this.history.push(`/quote/${quote["id"]}`);
