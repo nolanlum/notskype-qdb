@@ -65,8 +65,6 @@ class Main extends Component<{}, MainState> {
                 offset : this.state.offset + quotes.length,
                 fetching : false
             });
-
-            console.log(this.state);
         });
 
     }

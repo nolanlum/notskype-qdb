@@ -16,7 +16,7 @@ import * as url from "url";
 import * as isomorphicFetch from "isomorphic-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "http://localhost:8000/api/v1".replace(/\/+$/, "");
+const BASE_PATH = "/api/v1";
 
 /**
  *

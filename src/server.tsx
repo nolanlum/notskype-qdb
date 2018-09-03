@@ -18,11 +18,9 @@ let app = express();
 
 app.use(cookieParser());
 
-console.log("initializing api handle..");
 let api_handle = new api.QuoteApi(isomorphicFetch, "http://localhost:8000/api/v1");
 let auth_api_handle = new api.AuthApi(isomorphicFetch, "http://localhost:8000/api/v1");
 app.use("/api", (req, res, next) => {
-    console.log(req.url, req.cookies.qdbToken ? "has token" : "no token");
     const headers = req.cookies.qdbToken
         ? { "X-Qdb-Token": req.cookies.qdbToken }
         : {};
@@ -54,7 +52,6 @@ app.get("/login", (req, res) => {
             res.redirect(302, "/");
         })
         .catch((err) => {
-            console.log("An error decoding the JSON?", err);
             res.send(err);
         });
     }
