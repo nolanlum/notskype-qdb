@@ -56,10 +56,10 @@ class Main extends Component<{}, MainState> {
     loadMore() {
         this.state.fetching = true;
 
-        this.api_handle.qdbQuoteGet({
-            count : PER_PAGE,
-            offset : this.state.offset
-        }).then((quotes) => {
+        this.api_handle.qdbQuoteGet(
+            PER_PAGE,
+            this.state.offset
+        ).then((quotes) => {
             this.setState({
                 quotes : this.state.quotes.concat(quotes),
                 offset : this.state.offset + quotes.length,

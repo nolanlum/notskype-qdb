@@ -35,9 +35,9 @@ class State extends Component<StateProps, StateState> {
             if (existingQuote !== undefined) {
                 resolve(existingQuote);
             } else {
-                this.api_handle.qdbQuoteGetById({
-                        quoteId: quoteId
-                    })
+                this.api_handle.qdbQuoteGetById(
+                        quoteId
+                    )
                     .then((quote) => {
                         this.setState({
                             quotes: {

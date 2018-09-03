@@ -20,6 +20,7 @@ app.use(cookieParser());
 
 console.log("initializing api handle..");
 let api_handle = new api.QuoteApi(isomorphicFetch, "http://localhost:8000/api/v1");
+let auth_api_handle = new api.AuthApi(isomorphicFetch, "http://localhost:8000/api/v1");
 app.use("/api", (req, res, next) => {
     console.log(req.url, req.cookies.qdbToken ? "has token" : "no token");
     const headers = req.cookies.qdbToken
@@ -46,12 +47,14 @@ app.get("/", ssr);
 app.get("/login", (req, res) => {
     let slackCode = req.query.code;
     if (slackCode) {
-        api_handle.qdbAuthToken({ code: slackCode })
+        auth_api_handle.qdbAuthPost(slackCode)
+        .then((response) => response.text())
         .then((token) => {
             res.cookie("qdbToken", token, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365)});
             res.redirect(302, "/");
         })
         .catch((err) => {
+            console.log("An error decoding the JSON?", err);
             res.send(err);
         });
     }

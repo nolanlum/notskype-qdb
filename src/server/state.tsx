@@ -20,7 +20,7 @@ export const quoteId = (api_handle) =>
                 next();
             })
             .catch((e) => {
-                console.log("state population failed!", e);
+                console.log("state population failed!", e.status, e.statusText);
                 next();
             });
     };
