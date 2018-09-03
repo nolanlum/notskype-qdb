@@ -11,6 +11,7 @@ import * as api from "./api/api";
 import {ssr} from "./server/ssr";
 import * as metadata from "./server/metadata";
 import * as state from "./server/state";
+import authorizedApiHandle from "./server/apihandle";
 
 sourcemap.install();
 
@@ -18,8 +19,6 @@ let app = express();
 
 app.use(cookieParser());
 
-let api_handle = new api.QuoteApi(isomorphicFetch, "http://localhost:8000/api/v1");
-let auth_api_handle = new api.AuthApi(isomorphicFetch, "http://localhost:8000/api/v1");
 app.use("/api", (req, res, next) => {
     const headers = req.cookies.qdbToken
         ? { "X-Qdb-Token": req.cookies.qdbToken }
@@ -35,13 +34,16 @@ app.use("/api", (req, res, next) => {
 app.use(state.init);
 
 // metadata pipeline
-app.use("/quote/:id", state.quoteId(api_handle));
-app.use("/quote/:id", metadata.quoteId(api_handle));
+app.use("/quote/:id", authorizedApiHandle);
+app.use("/quote/:id", state.quoteId);
+app.use("/quote/:id", metadata.quoteId);
 app.get("/quote/:id", ssr);
 
-app.use("/", metadata.root(api_handle));
+app.use("/", authorizedApiHandle);
+app.use("/", metadata.root);
 app.get("/", ssr);
 
+let auth_api_handle = new api.AuthApi(isomorphicFetch, "http://localhost:8000/api/v1");
 app.get("/login", (req, res) => {
     let slackCode = req.query.code;
     if (slackCode) {
@@ -54,6 +56,8 @@ app.get("/login", (req, res) => {
         .catch((err) => {
             res.send(err);
         });
+    } else {
+        res.redirect(302, "/");
     }
 });
 
